@@ -13,6 +13,7 @@ A set of scripts we use at PoV for managing servers:
 Suggested steps for setting up a new server::
 
     $ sudo -s
+    # apt-get update
     # apt-get install python-software-properties
     # add-apt-repository ppa:mgedmin/ppa
     # apt-get update
