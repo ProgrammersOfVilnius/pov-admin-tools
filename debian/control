@@ -10,7 +10,7 @@ Standards-Version: 3.9.4
 
 Package: pov-admin-tools
 Architecture: all
-Depends: python (>= 2.6), vim-gnome | vim | vim-tiny, lsb-release, sudo, ${misc:Depends}
+Depends: python (>= 2.6), vim-gnome | vim | vim-tiny, lsb-release, sudo, ${python:Depends}, ${misc:Depends}
 Recommends:
  git-core, etckeeper,
  postfix, bsd-mailx,
