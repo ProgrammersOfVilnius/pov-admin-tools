@@ -1,0 +1,77 @@
+#!/bin/sh
+# http://mg.pov.lt/blog/sysadmin-diary.html is the closest this thing has to
+# documentation.
+version=1.0.1
+changelog=/root/Changelog
+editor=vim
+
+if [ x"$1" = x-h ] || [ x"$1" = x--help ]; then
+    echo "Usage: $0 [filename] [-a] [message]"
+    echo
+    echo "Opens an admin change log file (default: $changelog) in $editor"
+    echo "or appends a timestamped message to the end and prints it."
+    echo
+    echo "Options:"
+    echo "  -h, --help   this help message"
+    echo "  --version    print version number and exit"
+    echo "  -a           append to the last message without adding a timestamped header"
+    exit
+fi
+
+if [ x"$1" = x--version ]; then
+    echo "new-changelog-entry version $version"
+    echo "Written by Marius Gedminas <marius@gedmin.as>"
+    exit
+fi
+
+if test -n "$1" && test -f "$1"; then
+    changelog=$1
+    shift
+
+    case "$changelog" in
+        *[Cc]hangelog*)
+            ;;
+        *)
+            echo "Cowardly refusing to edit $changelog since it doesn't mention Changelog in the filename" 1>&2
+            exit 1
+            ;;
+    esac
+fi
+
+swapfile="`dirname $changelog`/.`basename $changelog`.swp"
+
+if [ -f $swapfile ]; then
+    echo "Someone is currently editing $changelog ($swapfile exists)" 1>&2
+    exit 1
+fi
+
+if ! [ -w $changelog ] && [ `id -u` -ne 0 ]; then
+    exec sudo "$0" "$changelog" "$@"
+fi
+
+header=1
+if [ x"$1" = x-a ]; then
+    header=0
+    shift
+fi
+
+msg="$*"
+
+if [ $header -eq 1 ]; then
+    if [ -f $changelog ]; then
+        # append an empty line if it is not there
+        test -n "`tail -n 1 $changelog`" && echo >> $changelog
+    fi
+
+    # append a header
+    cat >> $changelog <<END
+`date +'%Y-%m-%d %H:%M %z'`: ${SUDO_USER:-$USER}
+  $msg
+END
+else
+    echo "  $msg" >> $changelog
+fi
+
+test -z "$msg" \
+  && exec $editor $changelog +$ \
+  || tail $changelog

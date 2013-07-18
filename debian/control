@@ -1,0 +1,23 @@
+Source: pov-admin-tools
+Section: admin
+Priority: extra
+Maintainer: Marius Gedminas <marius@gedmin.as>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+#Homepage: <insert the upstream URL, if relevant>
+#Vcs-Git: git://git.debian.org/collab-maint/pov-admin-tools.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/pov-admin-tools.git;a=summary
+
+Package: pov-admin-tools
+Architecture: all
+Depends: ${misc:Depends}
+Description: A set of tools we use at PoV for managing servers
+ * This is an unofficial package.
+ .
+ This package contains a set of scripts that I found useful for managing
+ servers at PoV (http://pov.lt):
+ .
+ - new-changelog-entry: keeps a sysadmin diary (/root/Changelog)
+ - machine-summary: prints a short description of this machine (as
+   ReStructuredText)
+ - disk-inventory: prints an overview of your disks and partitions
