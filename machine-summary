@@ -17,7 +17,7 @@ except ImportError:
                 self[item] += 1
 
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 
 def fmt_size_decimal(bytes):
@@ -82,6 +82,19 @@ def get_ram_info():
 
 
 def get_disk_info(device):
+    if device == 'simfs':
+        # iv.lt VPSes have no /sys/block; they mount /dev/simfs on /
+        r = os.statvfs('/')
+        size = fmt_size_decimal(r.f_blocks * r.f_bsize)
+        return size
+    elif device == 'swap':
+        with open('/proc/swaps') as f:
+            next(f) # skip header line
+            size = 0
+            for line in f:
+                size += int(line.split()[2])
+            return fmt_size_si(size * 1024)
+
     sectors = int(read_file('/sys/block/%s/size' % device))
     size = fmt_size_decimal(sectors * 512)
     if device.startswith('cciss'):
@@ -96,6 +109,12 @@ def get_disk_info(device):
 
 
 def enumerate_disks():
+    if not os.path.exists('/sys/block'):
+        # iv.lt VPSes have no /sys/block; they mount /dev/simfs and use
+        # /dev/null for swap
+        if os.path.exists('/dev/simfs'):
+            return ['simfs', 'swap']
+        return ['???']
     return sorted(name for name in os.listdir('/sys/block')
                   if name.startswith(('sd', 'cciss')))
 
@@ -110,18 +129,19 @@ def get_disks_info():
 
 def get_netdev_info(device):
     mac = read_file('/sys/class/net/%s/address' % device).strip()
-    return 'MAC: %s' % mac
+    if mac:
+        return 'MAC: %s' % mac
 
 
 def get_network_info():
     devices = sorted(
-        d for d in os.listdir('/sys/class/net')
+        (d, get_netdev_info(d)) for d in os.listdir('/sys/class/net')
         if not d.startswith(('.', 'lo', 'br', 'virbr', 'vboxnet'))
            and '.' not in d
     )
     return ',\n        '.join(
-        '%s - %s' % (d, get_netdev_info(d))
-        for d in devices
+        '%s - %s' % (d, info) if info else d
+        for d, info in devices
     )
 
 
