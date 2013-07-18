@@ -17,6 +17,7 @@ source-package:
 .PHONY: upload-to-ppa
 upload-to-ppa: source-package
 	dput ppa:mgedmin/ppa ../pov-admin-tools_$(version)_source.changes
+	git tag $(version)
 
 .PHONY: binary-package
 binary-package:
