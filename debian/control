@@ -10,14 +10,14 @@ Standards-Version: 3.9.4
 
 Package: pov-admin-tools
 Architecture: all
-Depends: ${misc:Depends}
-Description: A set of tools we use at PoV for managing servers
+Depends: python (>= 2.6), vim-gnome | vim | vim-tiny, lsb-release, ${misc:Depends}
+Description: a set of tools we use at PoV for managing servers
  * This is an unofficial package.
  .
  This package contains a set of scripts that I found useful for managing
  servers at PoV (http://pov.lt):
  .
- - new-changelog-entry: keeps a sysadmin diary (/root/Changelog)
- - machine-summary: prints a short description of this machine (as
-   ReStructuredText)
- - disk-inventory: prints an overview of your disks and partitions
+   - new-changelog-entry: keeps a sysadmin diary (/root/Changelog)
+   - machine-summary: prints a short description of this machine (as
+     ReStructuredText)
+   - disk-inventory: prints an overview of your disks and partitions

@@ -1,0 +1,4 @@
+debian/pov-admin-tools/
+debian/pov-admin-tools.substvars
+debian/pov-admin-tools.debhelper.log
+debian/files
