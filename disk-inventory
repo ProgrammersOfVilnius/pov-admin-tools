@@ -14,9 +14,10 @@ Written by Marius Gedminas <marius@pov.lt>
 import collections
 import optparse
 import os
+import sys
 
 
-__version__ = '1.1.3'
+__version__ = '1.1.4'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -106,6 +107,9 @@ class LinuxDiskInfo(object):
 
         Limitations: only handles ATA/SATA/SCSI disks; no RAID or whatnot.
         """
+        if not os.path.exists('/sys/block'):
+            print >> sys.stderr, "disk-inventory: cannot discover block devices: /sys/block is missing"
+            return []
         return sorted(name for name in os.listdir('/sys/block')
                       if name.startswith('sd'))
 
