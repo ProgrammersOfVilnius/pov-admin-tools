@@ -85,7 +85,7 @@ def get_disk_info(device):
     if device == 'simfs':
         # iv.lt VPSes have no /sys/block; they mount /dev/simfs on /
         r = os.statvfs('/')
-        size = fmt_size_decimal(r.f_blocks * r.f_bsize)
+        size = fmt_size_si(r.f_blocks * r.f_bsize)
         return size
     elif device == 'swap':
         with open('/proc/swaps') as f:
