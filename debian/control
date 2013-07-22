@@ -16,7 +16,8 @@ Recommends:
  apt-checkupdates, unattended-upgrades,
  collectd, smartmontools, mcelog,
  ntp,
- screen, tree, bash-completion
+ screen, tree, bash-completion,
+ pov-check-health
 Description: a set of tools we use at PoV for managing servers
  * This is an unofficial package.
  .
