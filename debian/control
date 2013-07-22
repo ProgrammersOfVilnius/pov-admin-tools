@@ -4,9 +4,7 @@ Priority: extra
 Maintainer: Marius Gedminas <marius@gedmin.as>
 Build-Depends: debhelper (>= 8.0.0)
 Standards-Version: 3.9.4
-#Homepage: <insert the upstream URL, if relevant>
-#Vcs-Git: git://git.debian.org/collab-maint/pov-admin-tools.git
-#Vcs-Browser: http://git.debian.org/?p=collab-maint/pov-admin-tools.git;a=summary
+Homepage: https://github.com/ProgrammersOfVilnius/pov-admin-tools
 
 Package: pov-admin-tools
 Architecture: all
