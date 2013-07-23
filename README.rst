@@ -17,10 +17,10 @@ Suggested steps for setting up a new server::
     # apt-get install python-software-properties
     # add-apt-repository ppa:pov/ppa
     # apt-get update
-    # apt-get install pov-admin-tools apt-checkupdates
+    # apt-get install pov-admin-tools
     # new-changelog-entry
 
-(then copy and paste this list of commands)
+(then copy and paste this list of commands into the changelog)
 
 
 new-changelog-entry
