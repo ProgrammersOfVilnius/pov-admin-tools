@@ -70,9 +70,26 @@ Pokes around in `/proc` and `/sys` and emits a bit of ReStructuredText to
 summarize the storage situation on this machine::
 
     $ disk-inventory
-    sda: INTEL SSDSA2M160 (160.0 GB)
-      sda1:      151.6 GB  ext4 /                             10.8 GB free
-      sda5:        8.5 GB  swap
+    sda: ST1000NM0011 (1.0 TB)
+      sda1:        2.0 GB  swap
+      sda2:        1.0 GB  md0 ext3 /                        271.0 MB free
+      sda5:       15.0 GB  md1 ext4 /var                     977.8 MB free
+      sda6:        5.0 GB  md2 ext4 /usr                     706.8 MB free
+      sda7:      230.0 GB  md3 ext4 /home                     41.0 GB free
+      sda8:      247.1 GB  md4 ext4 /stuff                    21.5 GB free
+      sda9:      500.1 GB  LVM: fridge dm-0 dm-1 dm-2
+    sdb: ST3500320AS (500.1 GB)
+      sdb1:        2.0 GB  swap
+      sdb2:        1.0 GB  md0 ext3 /                        271.0 MB free
+      sdb5:       15.0 GB  md1 ext4 /var                     977.8 MB free
+      sdb6:        5.0 GB  md2 ext4 /usr                     706.8 MB free
+      sdb7:      230.0 GB  md3 ext4 /home                     41.0 GB free
+      sdb8:      247.1 GB  md4 ext4 /stuff                    21.5 GB free
+    fridge: LVM (500.1 GB)
+      tmp:        21.5 GB  ext4 /tmp                          19.8 GB free
+      jenkins:    21.5 GB  ext4 /var/lib/jenkins              10.9 GB free
+      buildbot:    42.9 GB  ext4 /var/lib/buildbot             13.7 GB free
+      free:      414.2 GB
 
 Supports RAID (md-raid) and LVM.  May need root access to provide full
 information.
