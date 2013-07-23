@@ -1,3 +1,4 @@
+source := $(shell dpkg-parsechangelog | awk '$$1 == "Source:" { print $$2 }')
 version := $(shell dpkg-parsechangelog | awk '$$1 == "Version:" { print $$2 }')
 
 .PHONY: all
@@ -16,7 +17,7 @@ source-package:
 
 .PHONY: upload-to-ppa
 upload-to-ppa: source-package
-	dput ppa:mgedmin/ppa ../pov-admin-tools_$(version)_source.changes
+	dput ppa:pov/ppa ../$(source)_$(version)_source.changes
 	git tag $(version)
 
 .PHONY: binary-package
