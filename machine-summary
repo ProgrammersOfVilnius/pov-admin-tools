@@ -4,6 +4,7 @@
 Produce a machine summary table in ReStructuredText
 """
 from __future__ import with_statement
+import math
 import os
 import socket
 try:
@@ -17,7 +18,11 @@ except ImportError:
                 self[item] += 1
 
 
-__version__ = '0.3'
+__version__ = '0.4'
+
+
+def fmt_with_units(size, units):
+    return ('%.1f %s' % (size, units)).replace('.0 ', ' ')
 
 
 def fmt_size_decimal(bytes):
@@ -25,7 +30,7 @@ def fmt_size_decimal(bytes):
     for prefix in 'KB', 'MB', 'GB', 'TB', 'PB':
         if size >= 1000:
             size, units = size / 1000., prefix
-    return '%.1f %s' % (size, units)
+    return fmt_with_units(size, units)
 
 
 def fmt_size_si(bytes):
@@ -33,7 +38,7 @@ def fmt_size_si(bytes):
     for prefix in 'KiB', 'MiB', 'GiB', 'TiB', 'PiB':
         if size >= 1024:
             size, units = size / 1024., prefix
-    return '%.1f %s' % (size, units)
+    return fmt_with_units(size, units)
 
 
 def get_hostname():
@@ -77,6 +82,13 @@ def get_ram_info():
         # How do I add the "reserved" ram that the kernel subtracts from
         # MemTotal?  I see it in /var/log/dmesg, but not in /proc
         # I could use dmidecode or lshw, if I had root...
+        # oh well, assume if it's almost a round number of gigs, then it's
+        # that exact number of gigs.
+        gibibytes = math.ceil(kibibytes / 1024. / 1024.)
+        if gibibytes * 1024 * 1024 - kibibytes < 350 * 1024:
+            # e.g. on my laptop with 8 gigs of ram, /proc reports 7.7 gigs
+            # (and 319 megs are missing)
+            kibibytes = gibibytes * 1024 * 1024
         return fmt_size_si(kibibytes * 1024)
     return 'n/a'
 
