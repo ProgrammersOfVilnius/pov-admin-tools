@@ -4,12 +4,16 @@ version := $(shell dpkg-parsechangelog | awk '$$1 == "Version:" { print $$2 }')
 .PHONY: all
 all:
 
+.PHONY: test
+test:
+	nosetests
+
 .PHONY: install
 install:
 	install -d $(DESTDIR)/usr/sbin/
 	install new-changelog-entry $(DESTDIR)/usr/sbin/
 	install disk-inventory $(DESTDIR)/usr/sbin/
-	install machine-summary $(DESTDIR)/usr/sbin/
+	install machine_summary.py $(DESTDIR)/usr/sbin/machine-summary
 
 .PHONY: source-package
 source-package:

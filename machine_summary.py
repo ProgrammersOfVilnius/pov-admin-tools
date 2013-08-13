@@ -41,6 +41,17 @@ def fmt_size_si(bytes):
     return fmt_with_units(size, units)
 
 
+def round_binary(bytes):
+    bits = bin(bytes).lstrip('0b')
+    if len(bits) < 2:
+        return bytes
+    mantissa = int(bits[:2], 2)
+    exponent = len(bits) - 2
+    if bits[2:].strip('0'):
+        mantissa += 1
+    return mantissa << exponent
+
+
 def get_hostname():
     """Return the (full) hostname"""
     hostname = socket.getfqdn()
@@ -84,12 +95,7 @@ def get_ram_info():
         # I could use dmidecode or lshw, if I had root...
         # oh well, assume if it's almost a round number of gigs, then it's
         # that exact number of gigs.
-        gibibytes = math.ceil(kibibytes / 1024. / 1024.)
-        if gibibytes * 1024 * 1024 - kibibytes < 350 * 1024:
-            # e.g. on my laptop with 8 gigs of ram, /proc reports 7.7 gigs
-            # (and 319 megs are missing)
-            kibibytes = gibibytes * 1024 * 1024
-        return fmt_size_si(kibibytes * 1024)
+        return fmt_size_si(round_binary(kibibytes * 1024))
     return 'n/a'
 
 
