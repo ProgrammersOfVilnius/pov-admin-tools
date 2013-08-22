@@ -22,7 +22,7 @@ def parse_du(stream):
         if not line.strip():
             continue
         size, name = line.split(None, 1)
-        res[name.rstrip()] = int(size)
+        res[name.rstrip('\r\n')] = int(size)
     return res
 
 

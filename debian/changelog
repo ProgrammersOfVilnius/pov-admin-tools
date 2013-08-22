@@ -2,6 +2,7 @@ pov-admin-tools (0.8) UNRELEASED; urgency=low
 
   * du-diff 0.2:
     - fix error when run without arguments
+    - don't strip trailing spaces from file names
 
  -- Marius Gedminas <marius@gedmin.as>  Thu, 22 Aug 2013 10:16:05 +0300
 
