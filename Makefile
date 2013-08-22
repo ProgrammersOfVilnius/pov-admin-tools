@@ -10,6 +10,8 @@ test:
 
 .PHONY: install
 install:
+	install -d $(DESTDIR)/usr/bin/
+	install du-diff $(DESTDIR)/usr/bin/du-diff
 	install -d $(DESTDIR)/usr/sbin/
 	install new-changelog-entry $(DESTDIR)/usr/sbin/
 	install disk-inventory $(DESTDIR)/usr/sbin/

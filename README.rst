@@ -10,6 +10,8 @@ A set of scripts we use at PoV for managing servers:
 
 - disk-inventory_: prints an overview of your disks and partitions
 
+- du-diff_: compares two disk usage snapshots (as produced by `du`)
+
 Suggested steps for setting up a new server::
 
     $ sudo -s
@@ -93,3 +95,32 @@ summarize the storage situation on this machine::
 
 Supports RAID (md-raid) and LVM.  May need root access to provide full
 information.
+
+
+du-diff
+=======
+
+Compares two disk usage snapshots produced by `du`.  Can transparently read
+gzipped files.  Sorts the output by difference.  Example::
+
+    $ du /var | gzip > du-$(date +%Y-%m-%d).gz
+    # wait a day or a week
+    $ du /var | gzip > du-$(date +%Y-%m-%d).gz
+    $ du-diff du-2013-08-21.gz du-2013-08-22.gz
+    -396536 /var/lib/hudson.obsolete/cache
+    -396536 /var/lib/hudson.obsolete
+    -395704 /var/lib
+    -345128 /var
+    -290680 /var/lib/hudson.obsolete/cache/buildout-eggs
+    ...
+    -8      /var/lib/hudson.obsolete/cache/buildout-eggs/PasteScript-1.7.3-py2.5.egg/EGG-INFO/scripts
+    +4      /var/lib/nagios3/spool/checkresults
+    +4      /var/lib/nagios3/spool
+    ...
+    +740    /var/lib/svn
+    +1688   /var/mail
+    +4224   /var/log/ConsoleKit
+    +4876   /var/log/apache2
+    +19840  /var/log
+    +28832  /var/www
+

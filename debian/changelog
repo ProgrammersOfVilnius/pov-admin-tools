@@ -1,6 +1,7 @@
 pov-admin-tools (0.7) UNRELEASED; urgency=low
 
   * Add pov-server-page to Recommends.
+  * New script: du-diff.
 
  -- Marius Gedminas <marius@gedmin.as>  Thu, 22 Aug 2013 09:00:34 +0300
 

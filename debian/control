@@ -29,3 +29,4 @@ Description: a set of tools we use at PoV for managing servers
    - machine-summary: prints a short description of this machine (as
      ReStructuredText)
    - disk-inventory: prints an overview of your disks and partitions
+   - du-diff: compares two disk usage snapshots produced by du
