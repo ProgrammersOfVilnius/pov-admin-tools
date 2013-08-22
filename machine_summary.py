@@ -4,7 +4,6 @@
 Produce a machine summary table in ReStructuredText
 """
 from __future__ import with_statement
-import math
 import os
 import socket
 try:

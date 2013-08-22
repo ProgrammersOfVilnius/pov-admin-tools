@@ -68,8 +68,8 @@ summarize this machine::
 disk-inventory
 ==============
 
-Pokes around in `/proc` and `/sys` and emits a bit of ReStructuredText to
-summarize the storage situation on this machine::
+Pokes around in `/proc` and `/sys` and emits a summary of the storage
+situation on this machine::
 
     $ disk-inventory
     sda: ST1000NM0011 (1.0 TB)

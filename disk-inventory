@@ -1,6 +1,6 @@
 #!/usr/bin/python
 """
-Produce a disk inventory for fridge:
+Produce a disk inventory for a system:
 
   - how many hard disks and how large
   - how are they partitioned
