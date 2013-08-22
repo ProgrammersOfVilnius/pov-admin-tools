@@ -12,6 +12,10 @@ import gzip
 from collections import defaultdict
 
 
+__version__ = '0.1'
+__author__ = 'Marius Gedminas <marius@gedmin.as>'
+
+
 def parse_du(stream):
     res = defaultdict(int)
     for line in stream:

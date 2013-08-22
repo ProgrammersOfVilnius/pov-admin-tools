@@ -5,3 +5,4 @@ debian/files
 *.pyc
 *.pyo
 __pycache__/
+*.1
