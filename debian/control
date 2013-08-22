@@ -19,7 +19,7 @@ Recommends:
  screen, tree, bash-completion,
  pov-check-health,
  pov-server-page
-Description: a set of tools we use at PoV for managing servers
+Description: set of tools we use at PoV for managing servers
  * This is an unofficial package.
  .
  This package contains a set of scripts that I found useful for managing
