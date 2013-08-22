@@ -17,7 +17,8 @@ Recommends:
  collectd, smartmontools, mcelog,
  ntp,
  screen, tree, bash-completion,
- pov-check-health
+ pov-check-health,
+ pov-server-page
 Description: a set of tools we use at PoV for managing servers
  * This is an unofficial package.
  .
