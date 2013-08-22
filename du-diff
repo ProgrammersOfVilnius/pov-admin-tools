@@ -12,7 +12,7 @@ import gzip
 from collections import defaultdict
 
 
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'Marius Gedminas <marius@gedmin.as>'
 
 
@@ -29,8 +29,8 @@ def parse_du(stream):
 def main():
     try:
         f1, f2 = sys.argv[1:]
-    except TypeError:
-        sys.exit(__doc__)
+    except ValueError:
+        sys.exit(__doc__.strip())
     du1 = parse_du(gzip.open(f1))
     du2 = parse_du(gzip.open(f2))
     diffs = dict((name, du2[name] - du1[name])
