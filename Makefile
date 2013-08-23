@@ -23,15 +23,24 @@ install:
 	install disk-inventory $(DESTDIR)/usr/sbin/
 	install machine_summary.py $(DESTDIR)/usr/sbin/machine-summary
 
+
+VCS_STATUS = git status --porcelain
+
+.PHONY: clean-build-tree
+clean-build-tree:
+	@test -z "`$(VCS_STATUS) 2>&1`" || { echo; echo "Your working tree is not clean; please commit and try again" 1>&2; $(VCS_STATUS); exit 1; }
+	rm -rf pkgbuild/$(source)
+	git archive --format=tar --prefix=pkgbuild/$(source)/ HEAD | tar -xf -
+
 .PHONY: source-package
-source-package:
-	debuild -S -i -k$(GPGKEY)
+source-package: clean-build-tree
+	cd pkgbuild/$(source) && debuild -S -i -k$(GPGKEY)
 
 .PHONY: upload-to-ppa
 upload-to-ppa: source-package
-	dput ppa:pov/ppa ../$(source)_$(version)_source.changes
+	dput ppa:pov/ppa pkgbuild/$(source)_$(version)_source.changes
 	git tag $(version)
 
 .PHONY: binary-package
-binary-package:
-	debuild -i -k$(GPGKEY)
+binary-package: clean-build-tree
+	cd pkgbuild/$(source) && debuild -i -k$(GPGKEY)
