@@ -3,8 +3,9 @@ pov-admin-tools (0.8) UNRELEASED; urgency=low
   * du-diff 0.2:
     - fix error when run without arguments
     - don't strip trailing spaces from file names
+  * New script: check-changelog.
 
- -- Marius Gedminas <marius@gedmin.as>  Thu, 22 Aug 2013 10:16:05 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Tue, 27 Aug 2013 15:30:01 +0300
 
 pov-admin-tools (0.7) precise; urgency=low
 

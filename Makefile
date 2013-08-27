@@ -2,7 +2,7 @@ source := $(shell dpkg-parsechangelog | awk '$$1 == "Source:" { print $$2 }')
 version := $(shell dpkg-parsechangelog | awk '$$1 == "Version:" { print $$2 }')
 
 .PHONY: all
-all: du-diff.1 disk-inventory.8 machine-summary.8 new-changelog-entry.8
+all: du-diff.1 disk-inventory.8 machine-summary.8 new-changelog-entry.8 check-changelog.8
 
 %.1: %.rst
 	rst2man $< > $@
@@ -22,6 +22,7 @@ install:
 	install new-changelog-entry $(DESTDIR)/usr/sbin/
 	install disk-inventory $(DESTDIR)/usr/sbin/
 	install machine_summary.py $(DESTDIR)/usr/sbin/machine-summary
+	install check-changelog $(DESTDIR)/usr/sbin/check-changelog
 
 
 VCS_STATUS = git status --porcelain

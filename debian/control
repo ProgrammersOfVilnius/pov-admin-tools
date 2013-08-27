@@ -30,3 +30,4 @@ Description: set of tools we use at PoV for managing servers
      ReStructuredText)
    - disk-inventory: prints an overview of your disks and partitions
    - du-diff: compares two disk usage snapshots produced by du
+   - check-changelog: checks /root/Changelog for consistency

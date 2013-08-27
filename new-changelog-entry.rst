@@ -60,3 +60,9 @@ BUGS
 Hardcodes **vim** as the text editor.
 
 The syntax for specifying a different changelog file is ugly.
+
+
+SEE ALSO
+========
+
+**check-changelog**\ (8)
