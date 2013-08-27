@@ -4,6 +4,7 @@ pov-admin-tools (0.8) UNRELEASED; urgency=low
     - fix error when run without arguments
     - don't strip trailing spaces from file names
   * New script: check-changelog.
+  * Add tig and htop to Recommends.
 
  -- Marius Gedminas <marius@gedmin.as>  Tue, 27 Aug 2013 15:30:01 +0300
 

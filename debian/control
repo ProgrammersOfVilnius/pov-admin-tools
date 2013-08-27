@@ -10,13 +10,13 @@ Package: pov-admin-tools
 Architecture: all
 Depends: python (>= 2.6), vim-gnome | vim, lsb-release, sudo, ${python:Depends}, ${misc:Depends}
 Recommends:
- git-core, etckeeper,
+ git-core, etckeeper, tig,
  postfix | mail-transport-agent,
  bsd-mailx | mailx,
  apt-checkupdates, unattended-upgrades,
  collectd, smartmontools, mcelog,
  ntp,
- screen, tree, bash-completion,
+ screen, tree, bash-completion, htop,
  pov-check-health,
  pov-server-page
 Description: set of tools we use at PoV for managing servers
