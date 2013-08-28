@@ -1,3 +1,9 @@
+pov-admin-tools (0.9) UNRELEASED; urgency=low
+
+  * Add pov-simple-backup to Recommends.
+
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 28 Aug 2013 20:05:39 +0300
+
 pov-admin-tools (0.8) precise; urgency=low
 
   * du-diff 0.2:

@@ -18,7 +18,8 @@ Recommends:
  ntp,
  screen, tree, bash-completion, htop,
  pov-check-health,
- pov-server-page
+ pov-server-page,
+ pov-simple-backup
 Description: set of tools we use at PoV for managing servers
  * This is an unofficial package.
  .
