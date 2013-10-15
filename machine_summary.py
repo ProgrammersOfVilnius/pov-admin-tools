@@ -17,7 +17,7 @@ except ImportError:
                 self[item] += 1
 
 
-__version__ = '0.4'
+__version__ = '0.5'
 
 
 def fmt_with_units(size, units):
@@ -99,8 +99,9 @@ def get_ram_info():
 
 
 def get_disk_info(device):
-    if device == 'simfs':
+    if device in ('simfs', 'vzfs', '???'):
         # iv.lt VPSes have no /sys/block; they mount /dev/simfs on /
+        # hostex.lt VPSes have no /sys/block either; they mount /dev/vzfs on /
         r = os.statvfs('/')
         size = fmt_size_si(r.f_blocks * r.f_bsize)
         return size
@@ -131,6 +132,8 @@ def enumerate_disks():
         # /dev/null for swap
         if os.path.exists('/dev/simfs'):
             return ['simfs', 'swap']
+        if os.path.exists('/dev/vzfs'):
+            return ['vzfs']
         return ['???']
     return sorted(name for name in os.listdir('/sys/block')
                   if name.startswith(('sd', 'cciss')))
