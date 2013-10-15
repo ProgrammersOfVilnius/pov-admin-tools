@@ -1,8 +1,10 @@
-pov-admin-tools (0.9) UNRELEASED; urgency=low
+pov-admin-tools (0.9) precise; urgency=low
 
+  * machine-summary 0.5:
+    - make it work in Virtuozzo containers
   * Add pov-simple-backup to Recommends.
 
- -- Marius Gedminas <marius@gedmin.as>  Wed, 28 Aug 2013 20:05:39 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Tue, 15 Oct 2013 11:57:58 +0300
 
 pov-admin-tools (0.8) precise; urgency=low
 
