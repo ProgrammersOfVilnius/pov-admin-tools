@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.1.4'
+__version__ = '1.1.5'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -111,7 +111,7 @@ class LinuxDiskInfo(object):
             print >> sys.stderr, "disk-inventory: cannot discover block devices: /sys/block is missing"
             return []
         return sorted(name for name in os.listdir('/sys/block')
-                      if name.startswith('sd'))
+                      if name.startswith(('sd', 'xvd')))
 
     def list_device_mapper(self):
         """Return a list of DMInfo tuples."""
@@ -205,9 +205,13 @@ class LinuxDiskInfo(object):
         return self.get_disk_size_sectors(disk_name) * 512
 
     def get_disk_model(self, disk_name):
+        if disk_name.startswith('xvd'):
+            return 'Xen virtual disk'
         return self._read_string('/sys/block/%s/device/model' % disk_name)
 
     def get_disk_firmware_rev(self, disk_name):
+        if disk_name.startswith('xvd'):
+            return 'N/A'
         return self._read_string('/sys/block/%s/device/rev' % disk_name)
 
     def list_partitions(self, disk_name):
@@ -227,7 +231,7 @@ class LinuxDiskInfo(object):
         if partition_name.startswith('mapper/'):
             name = partition_name[len('mapper/'):]
             return '/sys/block/%s' % self.get_dm_for(name)
-        return '/sys/block/%s/%s' % (partition_name[:3], partition_name)
+        return '/sys/block/%s/%s' % (partition_name.rstrip('0123456789'), partition_name)
 
     def get_partition_size_sectors(self, partition_name):
         sysdir = self.get_sys_dir_for_partition(partition_name)

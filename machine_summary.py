@@ -17,7 +17,7 @@ except ImportError:
                 self[item] += 1
 
 
-__version__ = '0.5'
+__version__ = '0.5.1'
 
 
 def fmt_with_units(size, units):
@@ -136,7 +136,7 @@ def enumerate_disks():
             return ['vzfs']
         return ['???']
     return sorted(name for name in os.listdir('/sys/block')
-                  if name.startswith(('sd', 'cciss')))
+                  if name.startswith(('sd', 'cciss', 'xvd')))
 
 
 def get_disks_info():
