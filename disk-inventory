@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.1.5'
+__version__ = '1.1.6dev'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -99,7 +99,10 @@ class LinuxDiskInfo(object):
             for line in f:
                 device, fstype, size_kb, used_kb, avail_kb, use_percent, mountpoint = line.split()
                 if device.startswith('/dev/'):
-                    res.append(FilesystemInfo(device[len('/dev/'):], mountpoint, fstype, int(size_kb), int(used_kb), int(avail_kb)))
+                    name = device[len('/dev/'):]
+                    if name.startswith('cciss/'):
+                        name = name.replace('/', '!')
+                    res.append(FilesystemInfo(name, mountpoint, fstype, int(size_kb), int(used_kb), int(avail_kb)))
         return res
 
     def list_physical_disks(self):
@@ -111,7 +114,7 @@ class LinuxDiskInfo(object):
             print >> sys.stderr, "disk-inventory: cannot discover block devices: /sys/block is missing"
             return []
         return sorted(name for name in os.listdir('/sys/block')
-                      if name.startswith(('sd', 'xvd')))
+                      if name.startswith(('sd', 'xvd', 'cciss')))
 
     def list_device_mapper(self):
         """Return a list of DMInfo tuples."""
@@ -231,7 +234,10 @@ class LinuxDiskInfo(object):
         if partition_name.startswith('mapper/'):
             name = partition_name[len('mapper/'):]
             return '/sys/block/%s' % self.get_dm_for(name)
-        return '/sys/block/%s/%s' % (partition_name.rstrip('0123456789'), partition_name)
+        disk_name = partition_name.rstrip('0123456789')
+        if disk_name.endswith('p'):
+            disk_name = disk_name[:-1]
+        return '/sys/block/%s/%s' % (disk_name, partition_name)
 
     def get_partition_size_sectors(self, partition_name):
         sysdir = self.get_sys_dir_for_partition(partition_name)
