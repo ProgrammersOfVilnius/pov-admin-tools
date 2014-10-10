@@ -1,12 +1,13 @@
-pov-admin-tools (0.10) UNRELEASED; urgency=low
+pov-admin-tools (0.10) precise; urgency=low
 
   * machine-summary 0.5.1:
     - handle Xen virtual disk devices correctly
-  * disk-inventory 1.1.5:
+  * disk-inventory 1.1.6:
     - handle Xen virtual disk devices correctly
+    - handle HP CCISS RAID devices correctly
   * Add atop and debsums to Recommends.
 
- -- Marius Gedminas <marius@gedmin.as>  Tue, 22 Oct 2013 11:02:24 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Fri, 10 Oct 2014 10:56:09 +0300
 
 pov-admin-tools (0.9) precise; urgency=low
 
