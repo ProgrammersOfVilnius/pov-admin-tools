@@ -1,3 +1,11 @@
+pov-admin-tools (0.10.1) precise; urgency=medium
+
+  * disk-inventory:
+    - include fix for swap device recognition, dropped because I forgot to git
+      pull before releasing.
+
+ -- Marius Gedminas <marius@gedmin.as>  Fri, 10 Oct 2014 10:57:51 +0300
+
 pov-admin-tools (0.10) precise; urgency=low
 
   * machine-summary 0.5.1:
