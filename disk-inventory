@@ -88,7 +88,10 @@ class LinuxDiskInfo(object):
             for line in f:
                 filename = line.split()[0]
                 if filename.startswith('/dev/'):
-                    res.append(filename[len('/dev/'):])
+                    name = filename[len('/dev/'):]
+                    if name.startswith('cciss/'):
+                        name = name.replace('/', '!')
+                    res.append(name)
         return res
 
     def list_filesystems(self):
