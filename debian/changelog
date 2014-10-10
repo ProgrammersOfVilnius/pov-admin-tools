@@ -4,6 +4,7 @@ pov-admin-tools (0.10) UNRELEASED; urgency=low
     - handle Xen virtual disk devices correctly
   * disk-inventory 1.1.5:
     - handle Xen virtual disk devices correctly
+  * Add atop and debsums to Recommends.
 
  -- Marius Gedminas <marius@gedmin.as>  Tue, 22 Oct 2013 11:02:24 +0300
 
