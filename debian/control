@@ -13,7 +13,7 @@ Recommends:
  git-core, etckeeper, tig,
  postfix | mail-transport-agent,
  bsd-mailx | mailx,
- apt-checkupdates, unattended-upgrades, debsums,
+ apt-checkupdates, unattended-upgrades, update-notifier-common, debsums,
  collectd, smartmontools, mcelog, atop,
  ntp,
  screen, tree, bash-completion, htop,
