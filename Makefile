@@ -1,5 +1,6 @@
 source := $(shell dpkg-parsechangelog | awk '$$1 == "Source:" { print $$2 }')
 version := $(shell dpkg-parsechangelog | awk '$$1 == "Version:" { print $$2 }')
+target_distribution := $(shell dpkg-parsechangelog | awk '$$1 == "Distribution:" { print $$2 }')
 
 # for testing in vagrant:
 #   vagrant box add precise64 http://files.vagrantup.com/precise64.box
@@ -25,6 +26,13 @@ all: du-diff.1 disk-inventory.8 machine-summary.8 new-changelog-entry.8 check-ch
 test:
 	nosetests
 
+.PHONY: check-target
+check-target:
+	@test "$(target_distribution)" = "precise" || { \
+	    echo "Distribution in debian/changelog should be 'precise'" 2>&1; \
+	    exit 1; \
+	}
+
 .PHONY: install
 install:
 	install -d $(DESTDIR)/usr/bin/
@@ -46,7 +54,7 @@ clean-build-tree:
 	git archive --format=tar --prefix=pkgbuild/$(source)/ HEAD | tar -xf -
 
 .PHONY: source-package
-source-package: clean-build-tree
+source-package: clean-build-tree test check-target
 	cd pkgbuild/$(source) && debuild -S -i -k$(GPGKEY)
 
 .PHONY: upload-to-ppa
