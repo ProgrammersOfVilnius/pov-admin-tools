@@ -1,11 +1,11 @@
-pov-admin-tools (0.11) UNRELEASED; urgency=medium
+pov-admin-tools (0.11) precise; urgency=medium
 
   * Add update-notifier-common to Recommends.
   * machine-summary 0.5.2:
     - handle OpenVZ container virtual disk devices more correctly,
     - handle KVM virtual disk devices.
 
- -- Marius Gedminas <marius@gedmin.as>  Fri, 17 Apr 2015 20:03:52 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Fri, 17 Apr 2015 20:05:49 +0300
 
 pov-admin-tools (0.10.1) precise; urgency=medium
 
