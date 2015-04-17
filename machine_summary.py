@@ -17,7 +17,7 @@ except ImportError:
                 self[item] += 1
 
 
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 
 def fmt_with_units(size, units):
@@ -127,16 +127,22 @@ def get_disk_info(device):
 
 
 def enumerate_disks():
-    if not os.path.exists('/sys/block'):
-        # iv.lt VPSes have no /sys/block; they mount /dev/simfs and use
-        # /dev/null for swap
-        if os.path.exists('/dev/simfs'):
-            return ['simfs', 'swap']
-        if os.path.exists('/dev/vzfs'):
-            return ['vzfs']
-        return ['???']
-    return sorted(name for name in os.listdir('/sys/block')
-                  if name.startswith(('sd', 'cciss', 'xvd')))
+    # Some containers don't have a /sys/block
+    # Some containers have an empty /sys/block
+    has_sys_block = os.path.exists('/sys/block')
+    if has_sys_block:
+        devices = sorted(name for name in os.listdir('/sys/block')
+                         if name.startswith(('sd', 'cciss', 'xvd', 'vd')))
+    else:
+        devices = []
+    if os.path.exists('/dev/simfs'):  # OpenVZ
+        # Uh, just guessing about swap actually: iv.lt VPSes mount /dev/null on swap
+        devices += ['simfs', 'swap']
+    if os.path.exists('/dev/vzfs'):   # Xen
+        devices += ['vzfs']
+    if not devices and not has_sys_block:
+        devices += ['???']
+    return devices
 
 
 def get_disks_info():
@@ -157,7 +163,7 @@ def get_network_info():
     devices = sorted(
         (d, get_netdev_info(d)) for d in os.listdir('/sys/class/net')
         if not d.startswith(('.', 'lo', 'br', 'virbr', 'vboxnet'))
-           and '.' not in d
+        and '.' not in d
     )
     return ',\n        '.join(
         '%s - %s' % (d, info) if info else d
@@ -182,7 +188,6 @@ def get_os_info():
 def get_architecture():
     """Return the OS architecture"""
     return os.uname()[4] # (kernel_name, node_name, kernel_release, kernel_version, cpu)
-
 
 
 def main():
