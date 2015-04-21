@@ -7,15 +7,17 @@ print some basic facts about this machine
 -----------------------------------------
 
 :Author: Marius Gedminas <marius@gedmin.as>
-:Date: 2015-04-17
-:Version: 0.5.2
+:Date: 2015-04-21
+:Version: 0.6.0
 :Manual section: 8
 
 
 SYNOPSIS
 ========
 
-**machine-summary**
+**machine-summary** [**--no-title**]
+
+**machine-summary** **-h** | **--help**
 
 
 DESCRIPTION
@@ -30,6 +32,13 @@ ReStructuredText format:
 - Sizes and models of hard disks
 - Names and MAC addresses of network cards
 - Name and version of the operating system
+
+
+OPTIONS
+=======
+
+-h, --help  show this help message and exit
+--no-title  skip the title heading
 
 
 CGI MODE

@@ -4,11 +4,12 @@
 Produce a machine summary table in ReStructuredText
 """
 from __future__ import with_statement
+import optparse
 import os
 import socket
 try:
     from collections import Counter
-except ImportError:
+except ImportError: # Python 2.6
     from collections import defaultdict
     class Counter(defaultdict):
         def __init__(self, items=()):
@@ -17,7 +18,7 @@ except ImportError:
                 self[item] += 1
 
 
-__version__ = '0.5.2'
+__version__ = '0.6.0'
 
 
 def fmt_with_units(size, units):
@@ -191,13 +192,19 @@ def get_architecture():
 
 
 def main():
+    parser = optparse.OptionParser('usage: %prog [options]',
+        description="Report machine summary information as ReStructuredText")
+    parser.add_option('--no-title', action='store_false', dest='title', default=True,
+                      help='skip the title heading')
+    opts, args = parser.parse_args()
     if os.getenv('RUN_AS_CGI'):
         print "Content-Type: text/plain; charset=UTF-8"
         print
-    hostname = get_hostname()
-    print(hostname)
-    print('=' * len(hostname))
-    print("")
+    if opts.title:
+        hostname = get_hostname()
+        print(hostname)
+        print('=' * len(hostname))
+        print("")
     print(':CPU: %s' % get_cpu_info())
     print(':RAM: %s' % get_ram_info())
     print(':Disks: %s' % get_disks_info())

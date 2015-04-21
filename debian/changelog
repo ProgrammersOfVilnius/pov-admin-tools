@@ -2,6 +2,8 @@ pov-admin-tools (0.11ubuntu1) UNRELEASED; urgency=medium
 
   * new-changelog-entry 1.0.3:
     - don't interpret backslash-escapes in the message (GH #4).
+  * machine-summary 0.6:
+    - new option: --no-title.
 
  -- Marius Gedminas <marius@gedmin.as>  Tue, 21 Apr 2015 12:51:52 +0300
 

@@ -58,11 +58,11 @@ summarize this machine::
     ========
 
     :CPU: 4 × Intel(R) Core(TM) i5-2520M CPU @ 2.50GHz
-    :RAM: 7.7 GiB
+    :RAM: 8 GiB
     :Disks: sda - 160.0 GB (model INTEL SSDSA2M160)
     :Network: eth0 - MAC: xx:xx:xx:xx:xx:xx,
             wlan0 - MAC: xx:xx:xx:xx:xx:xx
-    :OS: Ubuntu 13.04 (x86_64)
+    :OS: Ubuntu 14.10 (x86_64)
 
 
 disk-inventory
