@@ -1,3 +1,10 @@
+pov-admin-tools (0.11ubuntu1) UNRELEASED; urgency=medium
+
+  * new-changelog-entry 1.0.3:
+    - don't interpret backslash-escapes in the message (GH #4).
+
+ -- Marius Gedminas <marius@gedmin.as>  Tue, 21 Apr 2015 12:51:52 +0300
+
 pov-admin-tools (0.11) precise; urgency=medium
 
   * Add update-notifier-common to Recommends.

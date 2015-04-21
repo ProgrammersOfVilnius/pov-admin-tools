@@ -1,7 +1,7 @@
 #!/bin/sh
 # http://mg.pov.lt/blog/sysadmin-diary.html is the closest this thing has to
 # documentation.
-version=1.0.2
+version=1.0.3
 changelog=/root/Changelog
 editor=vim
 
@@ -69,7 +69,7 @@ if [ $header -eq 1 ]; then
   $msg
 END
 else
-    echo "  $msg" >> $changelog
+    printf "  %s" "$msg" >> $changelog
 fi
 
 test -z "$msg" \
