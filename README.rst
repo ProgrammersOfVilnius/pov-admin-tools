@@ -62,6 +62,7 @@ summarize this machine::
     :Disks: sda - 160.0 GB (model INTEL SSDSA2M160)
     :Network: eth0 - MAC: xx:xx:xx:xx:xx:xx,
             wlan0 - MAC: xx:xx:xx:xx:xx:xx
+    :IP: 192.168.99.196/24
     :OS: Ubuntu 14.10 (x86_64)
 
 

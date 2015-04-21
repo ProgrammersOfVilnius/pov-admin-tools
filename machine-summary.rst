@@ -31,6 +31,7 @@ ReStructuredText format:
 - Amount of RAM
 - Sizes and models of hard disks
 - Names and MAC addresses of network cards
+- IP addresses
 - Name and version of the operating system
 
 

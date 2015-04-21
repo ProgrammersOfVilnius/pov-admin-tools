@@ -1,9 +1,10 @@
-pov-admin-tools (0.11ubuntu1) UNRELEASED; urgency=medium
+pov-admin-tools (0.12) UNRELEASED; urgency=medium
 
   * new-changelog-entry 1.0.3:
     - don't interpret backslash-escapes in the message (GH #4).
   * machine-summary 0.6:
-    - new option: --no-title.
+    - new option: --no-title,
+    - show IP addresses (GH #1).
 
  -- Marius Gedminas <marius@gedmin.as>  Tue, 21 Apr 2015 12:51:52 +0300
 
@@ -11,8 +12,8 @@ pov-admin-tools (0.11) precise; urgency=medium
 
   * Add update-notifier-common to Recommends.
   * machine-summary 0.5.2:
-    - handle OpenVZ container virtual disk devices more correctly,
-    - handle KVM virtual disk devices.
+    - handle OpenVZ container virtual disk devices more correctly (GH #2),
+    - handle KVM virtual disk devices (GH #2).
 
  -- Marius Gedminas <marius@gedmin.as>  Fri, 17 Apr 2015 20:05:49 +0300
 

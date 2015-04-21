@@ -172,6 +172,15 @@ def get_network_info():
     )
 
 
+def get_ip_addresses():
+    addresses = []
+    for line in os.popen('ip addr'):
+        line = line.strip()
+        if line.startswith(('inet ', 'inet6 ')) and 'scope global' in line:
+            addresses.append(line.split()[1])
+    return addresses
+
+
 def get_os_info():
     """Return the OS name and version"""
     # bit of a hack that works on ubuntu and openwrt
@@ -209,6 +218,8 @@ def main():
     print(':RAM: %s' % get_ram_info())
     print(':Disks: %s' % get_disks_info())
     print(':Network: %s' % get_network_info())
+    for ipaddr in get_ip_addresses():
+        print(':IP: %s' % ipaddr)
     print(':OS: %s (%s)' % (get_os_info(), get_architecture()))
 
 
