@@ -16,8 +16,8 @@ Suggested steps for setting up a new server::
 
     $ sudo -s
     # apt-get update
-    # apt-get install python-software-properties
-    # add-apt-repository ppa:pov/ppa
+    # apt-get install software-properties-common
+    # add-apt-repository -y ppa:pov/ppa
     # apt-get update
     # apt-get install pov-admin-tools
     # new-changelog-entry
