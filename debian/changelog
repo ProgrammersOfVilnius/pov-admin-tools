@@ -1,9 +1,9 @@
-pov-admin-tools (0.12.1) UNRELEASED; urgency=medium
+pov-admin-tools (0.12.1) precise; urgency=medium
 
   * new-changelog-entry 1.0.4:
     - don't forget to add a trailing newline (GH #5).
 
- -- Marius Gedminas <marius@gedmin.as>  Wed, 22 Apr 2015 11:27:17 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 22 Apr 2015 11:29:37 +0300
 
 pov-admin-tools (0.12) precise; urgency=medium
 
