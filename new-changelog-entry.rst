@@ -7,8 +7,8 @@ tool to keep a sysadmin diary
 -----------------------------
 
 :Author: Marius Gedminas <marius@gedmin.as>
-:Date: 2013-08-22
-:Version: 1.0.2
+:Date: 2015-06-23
+:Version: 1.1.0
 :Manual section: 8
 
 
@@ -16,6 +16,8 @@ SYNOPSIS
 ========
 
 **new-changelog-entry** [*filename*] [**-a**] [*message*]
+
+**new-changelog-entry** [*filename*] [**-e**]
 
 **new-changelog-entry** **-h** | **--help**
 
@@ -34,6 +36,9 @@ message, then shows the last few lines fo the changelog to verify.
 
 Use **-a** to suppress the timestamped header and instead append to the
 previous message.
+
+Use **-e** to open the changelog file for editing without changing it in any
+way (**-a** with no arguments appends a blank line at the end).
 
 You can specify a different changelog file by specifying it as the first
 argument.  The file must exist and it must have 'changelog' somewhere in the

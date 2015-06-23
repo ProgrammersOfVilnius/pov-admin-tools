@@ -1,12 +1,13 @@
 #!/bin/sh
 # http://mg.pov.lt/blog/sysadmin-diary.html is the closest this thing has to
 # documentation.
-version=1.0.4
+version=1.1.0
 changelog=/root/Changelog
 editor=vim
 
 if [ x"$1" = x-h ] || [ x"$1" = x--help ]; then
     echo "Usage: $0 [filename] [-a] [message]"
+    echo "Usage: $0 [filename] [-e]"
     echo
     echo "Opens an admin change log file (default: $changelog) in $editor"
     echo "or appends a timestamped message to the end and prints it."
@@ -15,6 +16,7 @@ if [ x"$1" = x-h ] || [ x"$1" = x--help ]; then
     echo "  -h, --help   this help message"
     echo "  --version    print version number and exit"
     echo "  -a           append to the last message without adding a timestamped header"
+    echo "  -e           edit the changelog without adding a timestamped header"
     exit
 fi
 
@@ -50,9 +52,14 @@ if ! [ -w $changelog ] && [ `id -u` -ne 0 ]; then
 fi
 
 header=1
+append=1
 if [ x"$1" = x-a ]; then
     header=0
     shift
+elif [ x"$1" = x-e ]; then
+    header=0
+    append=0
+    shift $#
 fi
 
 msg="$*"
@@ -68,7 +75,7 @@ if [ $header -eq 1 ]; then
 `date +'%Y-%m-%d %H:%M %z'`: ${SUDO_USER:-$USER}
   $msg
 END
-else
+elif [ $append -eq 1 ]; then
     printf "  %s\n" "$msg" >> $changelog
 fi
 
