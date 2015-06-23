@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.1.6'
+__version__ = '1.1.7'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -97,7 +97,7 @@ class LinuxDiskInfo(object):
     def list_filesystems(self):
         """Return a list of FilesystemInfo tuples."""
         res = []
-        with os.popen('df -P --local --print-type') as f:
+        with os.popen('df -P --local --print-type -x debugfs') as f:
             f.readline() # skip header
             for line in f:
                 device, fstype, size_kb, used_kb, avail_kb, use_percent, mountpoint = line.split()
