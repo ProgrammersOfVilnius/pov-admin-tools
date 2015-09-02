@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.1.7'
+__version__ = '1.1.8'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -274,7 +274,8 @@ class LinuxDiskInfo(object):
         pv = self._lvm_pvs.get(partition_name)
         if pv:
             users.append('LVM: ' + pv.vgname)
-        users.extend(self.list_partition_holders(partition_name))
+        # This doesn't seem very informative:
+        # users.extend(self.list_partition_holders(partition_name))
         if partition_name in self._swap_devices:
             users.append('swap')
         fsinfo = self.get_partition_fsinfo(partition_name)
@@ -314,7 +315,17 @@ def main():
     parser.set_defaults(fmt_size=fmt_size_decimal)
     opts, args = parser.parse_args()
     fmt_size = opts.fmt_size
+    name_width = 8
+    usage_width = 30
     info = LinuxDiskInfo()
+    for disk in info.list_physical_disks():
+        for partition in info.list_partitions(disk):
+            name_width = max(name_width, len(partition) + 1)
+            usage_width = max(usage_width, len(info.get_partition_usage(partition)))
+    for vgroup in info.list_lvm_volume_groups():
+        for lv in info.list_lvm_logical_volumes():
+            name_width = max(name_width, len(lv.name) + 1)
+            usage_width = max(usage_width, len(info.get_partition_usage(lv.device)))
     for disk in info.list_physical_disks():
         disk_size_bytes = info.get_disk_size_bytes(disk)
         template = "{disk}: {model} ({size})"
@@ -338,9 +349,9 @@ def main():
                 continue
             usage = info.get_partition_usage(partition)
             fsinfo = info.get_partition_fsinfo(partition)
-            print "  {name:8} {size:>10}  {usage:30}  {free_space:>15}".format(
-                name=partition + ':',
-                usage=usage,
+            print "  {name:{nw}} {size:>10}  {usage:{uw}}  {free_space:>15}".format(
+                name=partition + ':', nw=name_width,
+                usage=usage, uw=usage_width,
                 size=fmt_size(partition_size_bytes),
                 free_space=fmt_size(fsinfo.avail_kb * 1024) + ' free' if fsinfo
                            else '',
@@ -352,14 +363,14 @@ def main():
         free_space_at_end = disk_size_bytes - last_partition_end
         if free_space_at_end and (opts.verbose >= 2
                                   or free_space_at_end > 100*1000**2): # megs
-            print "  {spacing:8} {size:>10} (unused)".format(
-                spacing='',
+            print "  {spacing:{nw}} {size:>10} (unused)".format(
+                spacing='', nw=name_width,
                 size=fmt_size(free_space_at_end),
             )
             unallocated -= free_space_at_end
         if unallocated and opts.verbose >= 2:
-            print "  {spacing:8} {size:>10} (metadata/internal fragmentation)".format(
-                spacing='',
+            print "  {spacing:{nw}} {size:>10} (metadata/internal fragmentation)".format(
+                spacing='', nw=name_width,
                 size=fmt_size(unallocated),
             )
     for vgroup in info.list_lvm_volume_groups():
@@ -373,16 +384,16 @@ def main():
                 continue
             usage = info.get_partition_usage(lv.device)
             fsinfo = info.get_partition_fsinfo(lv.device)
-            print "  {name:8} {size:>10}  {usage:30}  {free_space:>15}".format(
-                name=lv.name+':',
-                usage=usage,
+            print "  {name:{nw}} {size:>10}  {usage:{uw}}  {free_space:>15}".format(
+                name=lv.name+':', nw=name_width,
+                usage=usage, uw=usage_width,
                 size=fmt_size(lv.size_sectors * 512),
                 free_space=fmt_size(fsinfo.avail_kb * 1024) + ' free' if fsinfo
                            else '',
             ).rstrip()
         if vgroup.free_kb >= 1024 or opts.verbose >= 2:
-            print "  {name:8} {size:>10}".format(
-                name='free:',
+            print "  {name:{nw}} {size:>10}".format(
+                name='free:', nw=name_width,
                 size=fmt_size(vgroup.free_kb * 1024),
             )
 

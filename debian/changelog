@@ -1,3 +1,12 @@
+pov-admin-tools (0.12.3) UNRELEASED; urgency=medium
+
+  * disk-inventory 1.1.8:
+    - don't list partition holders, whatever those are ("dm-0 dm-1 dm-2 ..."),
+    - align columns when names of LVM volumes or mountpoints are longer than
+      expected.
+
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 02 Sep 2015 08:53:11 +0300
+
 pov-admin-tools (0.12.2) precise; urgency=medium
 
   * disk-inventory 1.1.7:
