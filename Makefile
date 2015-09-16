@@ -30,6 +30,7 @@ test:
 check-target:
 	@test "$(target_distribution)" = "precise" || { \
 	    echo "Distribution in debian/changelog should be 'precise'" 2>&1; \
+	    echo 'Run dch -r -D precise ""' 2>&1; \
 	    exit 1; \
 	}
 
