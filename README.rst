@@ -20,6 +20,7 @@ Suggested steps for setting up a new server::
     # add-apt-repository -y ppa:pov/ppa
     # apt-get update
     # apt-get install pov-admin-tools
+    # apt-get install collectd --no-install-recommends
     # new-changelog-entry
 
 (then copy and paste this list of commands into the changelog)
@@ -91,7 +92,7 @@ situation on this machine::
     fridge: LVM (500.1 GB)
       tmp:        21.5 GB  ext4 /tmp                          19.8 GB free
       jenkins:    21.5 GB  ext4 /var/lib/jenkins              10.9 GB free
-      buildbot:    42.9 GB  ext4 /var/lib/buildbot             13.7 GB free
+      buildbot:   42.9 GB  ext4 /var/lib/buildbot             13.7 GB free
       free:      414.2 GB
 
 Supports RAID (md-raid) and LVM.  May need root access to provide full
