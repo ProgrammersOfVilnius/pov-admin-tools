@@ -10,7 +10,7 @@ Package: pov-admin-tools
 Architecture: all
 Depends: python (>= 2.6), vim, lsb-release, sudo, ${python:Depends}, ${misc:Depends}
 Recommends:
- git-core, etckeeper, tig,
+ git, etckeeper, tig,
  postfix | mail-transport-agent,
  bsd-mailx | mailx,
  apt-checkupdates, unattended-upgrades, update-notifier-common, debsums,
