@@ -1,3 +1,10 @@
+pov-admin-tools (0.13.1) UNRELEASED; urgency=medium
+
+  * machine-summary 0.6.1:
+    - strip netmask from IP address.
+
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 28 Oct 2015 15:41:22 +0200
+
 pov-admin-tools (0.13.0) precise; urgency=medium
 
   * debian/control:

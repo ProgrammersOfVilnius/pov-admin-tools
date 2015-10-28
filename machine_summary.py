@@ -18,7 +18,7 @@ except ImportError: # Python 2.6
                 self[item] += 1
 
 
-__version__ = '0.6.0'
+__version__ = '0.6.1'
 
 
 def fmt_with_units(size, units):
@@ -177,7 +177,7 @@ def get_ip_addresses():
     for line in os.popen('ip addr'):
         line = line.strip()
         if line.startswith(('inet ', 'inet6 ')) and 'scope global' in line:
-            addresses.append(line.split()[1])
+            addresses.append(line.split()[1].partition('/')[0])
     return addresses
 
 
