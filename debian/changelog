@@ -4,8 +4,9 @@ pov-admin-tools (0.13.1) UNRELEASED; urgency=medium
     - strip netmask from IP address.
   * debian/control:
     - Add pydf to recommends.
+    - Add debian-goodies to recommends (for checkrestart).
 
- -- Marius Gedminas <marius@gedmin.as>  Wed, 28 Oct 2015 15:41:22 +0200
+ -- Marius Gedminas <marius@gedmin.as>  Tue, 08 Dec 2015 08:53:21 +0200
 
 pov-admin-tools (0.13.0) precise; urgency=medium
 
