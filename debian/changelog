@@ -1,4 +1,4 @@
-pov-admin-tools (0.13.1) UNRELEASED; urgency=medium
+pov-admin-tools (0.13.1) precise; urgency=medium
 
   * machine-summary 0.6.1:
     - strip netmask from IP address.
@@ -6,7 +6,7 @@ pov-admin-tools (0.13.1) UNRELEASED; urgency=medium
     - Add pydf to recommends.
     - Add debian-goodies to recommends (for checkrestart).
 
- -- Marius Gedminas <marius@gedmin.as>  Tue, 08 Dec 2015 08:53:21 +0200
+ -- Marius Gedminas <marius@gedmin.as>  Tue, 08 Dec 2015 09:00:26 +0200
 
 pov-admin-tools (0.13.0) precise; urgency=medium
 
