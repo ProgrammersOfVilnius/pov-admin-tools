@@ -18,7 +18,7 @@ Recommends:
  collectd-core,
  smartmontools, mcelog, atop,
  ntp,
- screen, tree, bash-completion, htop, pydf,
+ screen, tree, bash-completion, htop, pydf, pstree, apt-show-versions,
  pov-check-health,
  pov-server-page,
  pov-simple-backup

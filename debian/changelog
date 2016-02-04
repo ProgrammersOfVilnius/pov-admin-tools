@@ -1,3 +1,10 @@
+pov-admin-tools (0.13.2) UNRELEASED; urgency=medium
+
+  * debian/control:
+    - Add pstree and apt-show-versions to recommends.
+
+ -- Marius Gedminas <marius@gedmin.as>  Thu, 04 Feb 2016 18:19:26 +0200
+
 pov-admin-tools (0.13.1) precise; urgency=medium
 
   * machine-summary 0.6.1:
