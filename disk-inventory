@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -90,6 +90,16 @@ class LinuxDiskInfo(object):
     def _read_int(self, filename):
         return int(self._read_string(filename))
 
+    def _canonical_device_name(self, device):
+        if not device.startswith('/dev/'):
+            return None
+        name = device[len('/dev/'):]
+        if name.startswith('cciss/'):
+            name = name.replace('/', '!')
+        if name.startswith('dm-'):
+            name = self._dm_names.get(name)
+        return name
+
     def list_swap_devices(self):
         """Return short device names such as ['sda1']"""
         res = []
@@ -97,10 +107,8 @@ class LinuxDiskInfo(object):
             f.readline() # skip header
             for line in f:
                 filename = line.split()[0]
-                if filename.startswith('/dev/'):
-                    name = filename[len('/dev/'):]
-                    if name.startswith('cciss/'):
-                        name = name.replace('/', '!')
+                name = self._canonical_device_name(filename)
+                if name:
                     res.append(name)
         return res
 
@@ -111,12 +119,8 @@ class LinuxDiskInfo(object):
             f.readline() # skip header
             for line in f:
                 device, fstype, size_kb, used_kb, avail_kb, use_percent, mountpoint = line.split()
-                if device.startswith('/dev/'):
-                    name = device[len('/dev/'):]
-                    if name.startswith('cciss/'):
-                        name = name.replace('/', '!')
-                    if name.startswith('dm-'):
-                        name = self._dm_names.get(name)
+                name = self._canonical_device_name(device)
+                if name:
                     res.append(FilesystemInfo(name, mountpoint, fstype, int(size_kb), int(used_kb), int(avail_kb)))
         return res
 
