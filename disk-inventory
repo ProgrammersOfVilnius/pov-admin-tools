@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.1.8'
+__version__ = '1.1.9'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -31,6 +31,8 @@ LVInfo = collections.namedtuple('LVInfo', 'name vgname size_sectors device')
 
 DMInfo = collections.namedtuple('LVInfo', 'name major minor')
 
+DMName = collections.namedtuple('LVInfo', 'name number')
+
 
 class LinuxDiskInfo(object):
 
@@ -39,6 +41,7 @@ class LinuxDiskInfo(object):
     _filesystems_by_device_cache = None
     _lvm_pvs_cache = None
     _dm_cache = None
+    _dm_name_cache = None
 
     @property
     def _swap_devices(self):
@@ -73,6 +76,13 @@ class LinuxDiskInfo(object):
                 (dm.name, dm) for dm in self.list_device_mapper())
         return self._dm_cache
 
+    @property
+    def _dm_names(self):
+        if self._dm_name_cache is None:
+            self._dm_name_cache = dict(
+                (dm.number, dm.name) for dm in self.list_device_mapper_names())
+        return self._dm_name_cache
+
     def _read_string(self, filename):
         with open(filename) as f:
             return f.read().strip()
@@ -105,6 +115,8 @@ class LinuxDiskInfo(object):
                     name = device[len('/dev/'):]
                     if name.startswith('cciss/'):
                         name = name.replace('/', '!')
+                    if name.startswith('dm-'):
+                        name = self._dm_names.get(name)
                     res.append(FilesystemInfo(name, mountpoint, fstype, int(size_kb), int(used_kb), int(avail_kb)))
         return res
 
@@ -127,6 +139,19 @@ class LinuxDiskInfo(object):
                 # name, major, minor, attr, open, segments,  events,  uuid.
                 name, major, minor, _, _, _, _, _ = line.split(':')
                 res.append(DMInfo(name, int(major), int(minor)))
+        return res
+
+    def list_device_mapper_names(self):
+        """Return a list of DMName tuples."""
+        res = []
+        try:
+            for name in os.listdir('/dev/mapper'):
+                if not os.path.islink('/dev/mapper/' + name):
+                    continue
+                number = os.readlink('/dev/mapper/' + name).split('/')[-1]
+                res.append(DMName('mapper/' + name, number))
+        except IOError:
+            pass
         return res
 
     def list_lvm_volume_groups(self):

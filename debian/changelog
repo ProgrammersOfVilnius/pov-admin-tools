@@ -1,3 +1,10 @@
+pov-admin-tools (0.13.3) UNRELEASED; urgency=medium
+
+  * disk-inventory 1.1.9:
+    - handle the root partition being an LVM volume correctly.
+
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 31 Aug 2016 10:31:51 +0300
+
 pov-admin-tools (0.13.2) precise; urgency=medium
 
   * debian/control:
