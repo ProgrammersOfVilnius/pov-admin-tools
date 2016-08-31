@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.1.9'
+__version__ = '1.2.0'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -285,9 +285,13 @@ class LinuxDiskInfo(object):
         sysdir = self.get_sys_dir_for_partition(partition_name)
         return sorted(os.listdir(sysdir + '/holders'))
 
-    def get_partition_fsinfo(self, partition_name):
+    def partition_raid_devices(self, partition_name):
         holders = self.list_partition_holders(partition_name)
         raid_devices = [d for d in holders if d.startswith('md')]
+        return raid_devices
+
+    def get_partition_fsinfo(self, partition_name):
+        raid_devices = self.partition_raid_devices(partition_name)
         for dev in [partition_name] + raid_devices:
             fsinfo = self._filesystems_by_device.get(dev)
             if fsinfo is not None:
@@ -299,8 +303,9 @@ class LinuxDiskInfo(object):
         pv = self._lvm_pvs.get(partition_name)
         if pv:
             users.append('LVM: ' + pv.vgname)
-        # This doesn't seem very informative:
-        # users.extend(self.list_partition_holders(partition_name))
+        raid_devices = self.partition_raid_devices(partition_name)
+        for md in raid_devices:
+            users.append(md + ':')
         if partition_name in self._swap_devices:
             users.append('swap')
         fsinfo = self.get_partition_fsinfo(partition_name)
