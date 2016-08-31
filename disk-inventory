@@ -147,6 +147,7 @@ class LinuxDiskInfo(object):
 
     def list_device_mapper_names(self):
         """Return a list of DMName tuples."""
+        # XXX: I could construct this from self._dms, using self.get_dm_for()
         res = []
         try:
             for name in os.listdir('/dev/mapper'):
