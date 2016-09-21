@@ -1,4 +1,4 @@
-pov-admin-tools (0.15.0) UNRELEASED; urgency=medium
+pov-admin-tools (0.15.0) precise; urgency=medium
 
   * disk-inventory 1.2.1:
     - recognize LVM volumes used for swap.
@@ -12,7 +12,7 @@ pov-admin-tools (0.15.0) UNRELEASED; urgency=medium
   * debian/control:
     - add dstat to recommends.
 
- -- Marius Gedminas <marius@gedmin.as>  Wed, 21 Sep 2016 08:36:57 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 21 Sep 2016 08:56:51 +0300
 
 pov-admin-tools (0.14.0) precise; urgency=medium
 
