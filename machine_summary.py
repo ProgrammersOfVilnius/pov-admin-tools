@@ -3,22 +3,14 @@
 """
 Produce a machine summary table in ReStructuredText
 """
-from __future__ import with_statement
+
 import optparse
 import os
 import socket
-try:
-    from collections import Counter
-except ImportError: # Python 2.6
-    from collections import defaultdict
-    class Counter(defaultdict):
-        def __init__(self, items=()):
-            defaultdict.__init__(self, int)
-            for item in items:
-                self[item] += 1
+from collections import Counter
 
 
-__version__ = '0.6.1'
+__version__ = '0.7.0'
 
 
 def fmt_with_units(size, units):
@@ -57,7 +49,7 @@ def get_hostname():
     hostname = socket.getfqdn()
     if hostname in ('localhost6.localdomain6', 'localhost.localdomain'):
         # I'd like to return the full hostname, but socket.getfqdn() is buggy
-        # and returns 'localhost6.localdomain6' on modern ubuntu
+        # and returns 'localhost6.localdomain6' on some ubuntu versions
         hostname = socket.gethostname()
     return hostname
 
@@ -160,11 +152,18 @@ def get_netdev_info(device):
         return 'MAC: %s' % mac
 
 
+def is_interesting_netdev(name):
+    return not name.startswith(('lo', 'virbr', 'vboxnet', 'vnet', 'docker'))
+
+
+def is_bridge(name):
+    return name.startswith('br')
+
+
 def get_network_info():
     devices = sorted(
         (d, get_netdev_info(d)) for d in os.listdir('/sys/class/net')
-        if not d.startswith(('.', 'lo', 'br', 'virbr', 'vboxnet'))
-        and '.' not in d
+        if '.' not in d and is_interesting_netdev(d) and not is_bridge(d)
     )
     return ',\n        '.join(
         '%s - %s' % (d, info) if info else d
@@ -177,7 +176,9 @@ def get_ip_addresses():
     for line in os.popen('ip addr'):
         line = line.strip()
         if line.startswith(('inet ', 'inet6 ')) and 'scope global' in line:
-            addresses.append(line.split()[1].partition('/')[0])
+            d = line.split()[-1]
+            if is_interesting_netdev(d):
+                addresses.append((line.split()[1].partition('/')[0], d))
     return addresses
 
 
@@ -203,12 +204,12 @@ def get_architecture():
 def main():
     parser = optparse.OptionParser('usage: %prog [options]',
         description="Report machine summary information as ReStructuredText")
-    parser.add_option('--no-title', action='store_false', dest='title', default=True,
-                      help='skip the title heading')
+    parser.add_option('-n', '--no-title', action='store_false', dest='title',
+                      default=True, help='skip the title heading')
     opts, args = parser.parse_args()
     if os.getenv('RUN_AS_CGI'):
-        print "Content-Type: text/plain; charset=UTF-8"
-        print
+        print("Content-Type: text/plain; charset=UTF-8")
+        print("")
     if opts.title:
         hostname = get_hostname()
         print(hostname)
@@ -218,8 +219,8 @@ def main():
     print(':RAM: %s' % get_ram_info())
     print(':Disks: %s' % get_disks_info())
     print(':Network: %s' % get_network_info())
-    for ipaddr in get_ip_addresses():
-        print(':IP: %s' % ipaddr)
+    for ipaddr, dev in get_ip_addresses():
+        print(':IP: %s (%s)' % (ipaddr, dev))
     print(':OS: %s (%s)' % (get_os_info(), get_architecture()))
 
 

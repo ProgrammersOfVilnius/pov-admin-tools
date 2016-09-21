@@ -1,7 +1,14 @@
-pov-admin-tools (0.14.1) UNRELEASED; urgency=medium
+pov-admin-tools (0.15.0) UNRELEASED; urgency=medium
 
   * disk-inventory 1.2.1:
     - recognize LVM volumes used for swap.
+  * machine-summary 0.7.0:
+    - allow -n as short option for --no-title,
+    - drop Python 2.6 compatibility,
+    - restore Python 3 compatibility,
+    - ignore docker* and vnet* (libvirt) virtual network devices,
+    - ignore IP addresses on virtual network devices,
+    - show which device has which IP address.
   * debian/control:
     - add dstat to recommends.
 
