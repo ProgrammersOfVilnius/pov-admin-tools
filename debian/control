@@ -16,7 +16,7 @@ Recommends:
  apt-checkupdates, unattended-upgrades, update-notifier-common, debsums,
  debian-goodies,
  collectd-core,
- smartmontools, mcelog, atop,
+ smartmontools, mcelog, atop, dstat,
  ntp,
  screen, tree, bash-completion, htop, pydf, pstree, apt-show-versions,
  pov-check-health,
