@@ -10,7 +10,7 @@ import socket
 from collections import Counter
 
 
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 
 def fmt_with_units(size, units):
@@ -203,6 +203,7 @@ def get_architecture():
 
 def main():
     parser = optparse.OptionParser('usage: %prog [options]',
+        version=__version__,
         description="Report machine summary information as ReStructuredText")
     parser.add_option('-n', '--no-title', action='store_false', dest='title',
                       default=True, help='skip the title heading')

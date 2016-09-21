@@ -23,7 +23,7 @@ all: du-diff.1 disk-inventory.8 machine-summary.8 new-changelog-entry.8 check-ch
 	rst2man $< > $@
 
 .PHONY: test
-test:
+test: check-version
 	nosetests
 
 .PHONY: check-target
@@ -33,6 +33,27 @@ check-target:
 	    echo 'Run dch -r -D precise ""' 2>&1; \
 	    exit 1; \
 	}
+
+define CHECKVER
+@grep -q ":Version: $2" $1 || { \
+    echo "Version number in $1 doesn't match $2" 2>&1; \
+    exit 1; \
+}
+endef
+define CHECKDATE
+@grep -q ":Date: $2" $1 || { \
+    echo "Date number in $1 doesn't match $2" 2>&1; \
+    exit 1; \
+}
+endef
+
+.PHONY: check-version
+check-version:
+	$(call CHECKVER,check-changelog.rst,$(shell ./check-changelog --version))
+	$(call CHECKVER,disk-inventory.rst,$(shell ./disk-inventory --version))
+	$(call CHECKVER,du-diff.rst,$(shell ./du-diff --version))
+	$(call CHECKVER,machine-summary.rst,$(shell ./machine_summary.py --version))
+	$(call CHECKVER,new-changelog-entry.rst,$(shell ./new-changelog-entry --version|awk 'NR==1{print $$NF}'))
 
 .PHONY: install
 install:

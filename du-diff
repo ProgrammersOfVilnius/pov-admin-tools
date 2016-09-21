@@ -9,10 +9,11 @@ Can read from gzipped files.
 
 import sys
 import gzip
+import optparse
 from collections import defaultdict
 
 
-__version__ = '0.2'
+__version__ = '1.0'
 __author__ = 'Marius Gedminas <marius@gedmin.as>'
 
 
@@ -27,8 +28,15 @@ def parse_du(stream):
 
 
 def main():
+    parser = optparse.OptionParser(
+        'usage: %prog filename1 filename2',
+        version=__version__,
+        description="computes the differences between two disk usage files"
+                    " (produced by du > filename; optionally also gzipped)")
+    parser.add_option('-v', '--verbose', action='store_true')
+    opts, args = parser.parse_args()
     try:
-        f1, f2 = sys.argv[1:]
+        f1, f2 = args
     except ValueError:
         sys.exit(__doc__.strip())
     du1 = parse_du(gzip.open(f1))

@@ -338,7 +338,7 @@ def fmt_size_decimal(bytes):
 
 
 def main():
-    parser = optparse.OptionParser(usage='%prog [options]')
+    parser = optparse.OptionParser(usage='%prog [options]', version=__version__)
     parser.add_option('-v', '--verbose', action='count', dest='verbose',
                       default=1)
     parser.add_option('--decimal', help='use decimal units (1 KB = 1000 B)',

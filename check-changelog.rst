@@ -8,7 +8,7 @@ check /root/Changelog for consistency
 
 :Author: Marius Gedminas <marius@gedmin.as>
 :Date: 2013-08-27
-:Version: 1.0
+:Version: 1.0.0
 :Manual section: 8
 
 

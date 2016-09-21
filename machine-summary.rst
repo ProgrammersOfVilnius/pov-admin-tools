@@ -7,15 +7,15 @@ print some basic facts about this machine
 -----------------------------------------
 
 :Author: Marius Gedminas <marius@gedmin.as>
-:Date: 2015-04-21
-:Version: 0.6.0
+:Date: 2016-09-21
+:Version: 0.7.1
 :Manual section: 8
 
 
 SYNOPSIS
 ========
 
-**machine-summary** [**--no-title**]
+**machine-summary** [**-n** | **--no-title**]
 
 **machine-summary** **-h** | **--help**
 
@@ -38,8 +38,9 @@ ReStructuredText format:
 OPTIONS
 =======
 
--h, --help  show this help message and exit
---no-title  skip the title heading
+-h, --help      show this help message and exit
+--version       print version number and exit
+-n, --no-title  skip the title heading
 
 
 CGI MODE

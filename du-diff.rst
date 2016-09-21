@@ -7,8 +7,8 @@ compare two disk usage snapshots
 --------------------------------
 
 :Author: Marius Gedminas <marius@gedmin.as>
-:Date: 2013-08-22
-:Version: 0.2
+:Date: 2016-09-21
+:Version: 1.0
 :Manual section: 1
 
 
