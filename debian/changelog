@@ -2,9 +2,12 @@ pov-admin-tools (0.15.1) UNRELEASED; urgency=medium
 
   * all the scripts now support --version,
   * documented machine-summary -n in the manual page,
-  * updated forgotten versions and dates in manual pages.
+  * updated forgotten versions and dates in manual pages,
+  * debian/control:
+    - pstree is actually in the psmisc package,
+    - add command-not-found to recommends.
 
- -- Marius Gedminas <marius@gedmin.as>  Wed, 21 Sep 2016 09:44:45 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Thu, 20 Oct 2016 10:23:13 +0300
 
 pov-admin-tools (0.15.0) precise; urgency=medium
 

@@ -14,11 +14,11 @@ Recommends:
  postfix | mail-transport-agent,
  bsd-mailx | mailx,
  apt-checkupdates, unattended-upgrades, update-notifier-common, debsums,
- debian-goodies,
+ debian-goodies, apt-show-versions,
  collectd-core,
  smartmontools, mcelog, atop, dstat,
  ntp,
- screen, tree, bash-completion, htop, pydf, pstree, apt-show-versions,
+ screen, tree, bash-completion, command-not-found, htop, pydf, psmisc,
  pov-check-health,
  pov-server-page,
  pov-simple-backup
