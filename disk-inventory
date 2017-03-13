@@ -17,7 +17,7 @@ import os
 import sys
 
 
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 
 
 FilesystemInfo = collections.namedtuple('FilesystemInfo',
@@ -197,11 +197,18 @@ class LinuxDiskInfo(object):
             for line in f:
                 # the "wtf" column is "physical volume (not) allocatable"
                 # the _ column is "internal physical volume number (obsolete)"
-                (device, vgname, size_kb, _, status, wtf, n_volumes,
-                 extent_size_kb, n_extents, free_extents,
-                 used_extents, uuid) = line.strip().split(':')
-                if device.startswith('/dev/'):
-                    res.append(PVInfo(device[len('/dev/'):], vgname))
+                try:
+                    (device, vgname, size_kb, _, status, wtf, n_volumes,
+                     extent_size_kb, n_extents, free_extents,
+                     used_extents, uuid) = line.strip().split(':')
+                except ValueError:
+                    # Could be something like a
+                    #    "/dev/sdc2" is a new physical volume of "231.95 GiB"
+                    # which shows up when you pvcreate but don't vgextend.
+                    pass
+                else:
+                    if device.startswith('/dev/'):
+                        res.append(PVInfo(device[len('/dev/'):], vgname))
         return res
 
     def list_lvm_logical_volumes(self):
