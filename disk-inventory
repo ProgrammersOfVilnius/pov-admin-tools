@@ -316,14 +316,23 @@ class LinuxDiskInfo(object):
                 return fsinfo
         return None
 
+    def get_partition_lvm_pv(self, partition_name):
+        raid_devices = self.partition_raid_devices(partition_name)
+        dm_devices = self.partition_dm_devices(partition_name)
+        for dev in [partition_name] + raid_devices + dm_devices:
+            pv = self._lvm_pvs.get(dev)
+            if pv:
+                return pv
+        return None
+
     def get_partition_usage(self, partition_name):
         users = []
-        pv = self._lvm_pvs.get(partition_name)
-        if pv:
-            users.append('LVM: ' + pv.vgname)
         raid_devices = self.partition_raid_devices(partition_name)
         for md in raid_devices:
             users.append(md + ':')
+        pv = self.get_partition_lvm_pv(partition_name)
+        if pv:
+            users.append('LVM: ' + pv.vgname)
         if partition_name in self._swap_devices:
             users.append('swap')
         fsinfo = self.get_partition_fsinfo(partition_name)
