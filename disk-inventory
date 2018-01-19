@@ -302,9 +302,15 @@ class LinuxDiskInfo(object):
         raid_devices = [d for d in holders if d.startswith('md')]
         return raid_devices
 
+    def partition_dm_devices(self, partition_name):
+        holders = self.list_partition_holders(partition_name)
+        return [self._dm_names.get(d, d)
+                for d in holders if d.startswith('dm-')]
+
     def get_partition_fsinfo(self, partition_name):
         raid_devices = self.partition_raid_devices(partition_name)
-        for dev in [partition_name] + raid_devices:
+        dm_devices = self.partition_dm_devices(partition_name)
+        for dev in [partition_name] + raid_devices + dm_devices:
             fsinfo = self._filesystems_by_device.get(dev)
             if fsinfo is not None:
                 return fsinfo
