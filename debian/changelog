@@ -1,4 +1,4 @@
-pov-admin-tools (0.16.0) UNRELEASED; urgency=medium
+pov-admin-tools (0.16.0) trusty; urgency=medium
 
   * Moved machine-summary, disk-inventory and du-diff scripts into
     pov-server-page.
@@ -8,7 +8,7 @@ pov-admin-tools (0.16.0) UNRELEASED; urgency=medium
   * new-changelog-entry 1.2.0:
     - allow leading -- to disambiguate messages that look like filenames.
 
- -- Marius Gedminas <marius@gedmin.as>  Sat, 20 Jan 2018 16:07:04 +0200
+ -- Marius Gedminas <marius@gedmin.as>  Sat, 20 Jan 2018 18:37:29 +0200
 
 pov-admin-tools (0.15.2) precise; urgency=medium
 

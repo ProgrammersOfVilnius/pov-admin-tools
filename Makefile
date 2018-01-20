@@ -28,9 +28,13 @@ test: check-version
 check-target:
 	@test "$(target_distribution)" = "$(TARGET_DISTRO)" || { \
 	    echo "Distribution in debian/changelog should be '$(TARGET_DISTRO)'" 2>&1; \
-	    echo 'Run dch -r -D $(TARGET_DISTRO) ""' 2>&1; \
+	    echo "Run make update-target" 2>&1; \
 	    exit 1; \
 	}
+
+.PHONY: update-target
+update-target:
+	dch -r -D $(TARGET_DISTRO) ""
 
 define CHECKVER
 @grep -q ":Version: $2" $1 || { \
@@ -39,10 +43,19 @@ define CHECKVER
 }
 endef
 
+check_changelog_version = $(shell ./check-changelog --version)
+new_changelog_entry_version = $(shell ./new-changelog-entry --version|awk 'NR==1{print $$NF}')
+
 .PHONY: check-version
 check-version:
-	$(call CHECKVER,check-changelog.rst,$(shell ./check-changelog --version))
-	$(call CHECKVER,new-changelog-entry.rst,$(shell ./new-changelog-entry --version|awk 'NR==1{print $$NF}'))
+	$(call CHECKVER,check-changelog.rst,$(check_changelog_version))
+	$(call CHECKVER,new-changelog-entry.rst,$(new_changelog_entry_version))
+
+.PHONY: update-version
+update-version:
+	sed -i -e 's/^:Version: .*/:Version: $(check_changelog_version)/' check-changelog.rst
+	sed -i -e 's/^:Version: .*/:Version: $(new_changelog_entry_version)/' new-changelog-entry.rst
+	@echo "Check if you need to update dates as well!"
 
 .PHONY: install
 install:
