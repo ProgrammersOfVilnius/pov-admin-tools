@@ -1,14 +1,14 @@
 Source: pov-admin-tools
 Section: admin
-Priority: extra
+Priority: optional
 Maintainer: Marius Gedminas <marius@gedmin.as>
-Build-Depends: debhelper (>= 8.0.0), python-nose, python-docutils
-Standards-Version: 3.9.4
+Build-Depends: debhelper (>= 9.0.0), python-docutils
+Standards-Version: 3.9.6
 Homepage: https://github.com/ProgrammersOfVilnius/pov-admin-tools
 
 Package: pov-admin-tools
 Architecture: all
-Depends: python (>= 2.6), vim, lsb-release, sudo, ${python:Depends}, ${misc:Depends}
+Depends: python (>= 2.7), vim, lsb-release, sudo, ${python:Depends}, ${misc:Depends}
 Recommends:
  git, etckeeper, tig,
  postfix | mail-transport-agent,
@@ -24,15 +24,14 @@ Recommends:
  pov-simple-backup
 Suggests:
  collectd
+Breaks: pov-server-page (<< 1.1)
 Description: set of tools we use at PoV for managing servers
  * This is an unofficial package.
  .
  This package contains a set of scripts that I found useful for managing
- servers at PoV (http://pov.lt):
+ servers at PoV (https://pov.lt):
  .
    - new-changelog-entry: keeps a sysadmin diary (/root/Changelog)
-   - machine-summary: prints a short description of this machine (as
-     ReStructuredText)
-   - disk-inventory: prints an overview of your disks and partitions
-   - du-diff: compares two disk usage snapshots produced by du
    - check-changelog: checks /root/Changelog for consistency
+ .
+ It also pulls in (via Recommends) a set of other packages I find indispensable.

@@ -16,17 +16,13 @@ VAGRANT_SSH_ALIAS = vagrantbox
 
 
 .PHONY: all
-all: du-diff.1 disk-inventory.8 machine-summary.8 new-changelog-entry.8 check-changelog.8
-
-%.1: %.rst
-	rst2man $< > $@
+all: new-changelog-entry.8 check-changelog.8
 
 %.8: %.rst
 	rst2man $< > $@
 
 .PHONY: test
 test: check-version
-	nosetests
 
 .PHONY: check-target
 check-target:
@@ -42,30 +38,16 @@ define CHECKVER
     exit 1; \
 }
 endef
-define CHECKDATE
-@grep -q ":Date: $2" $1 || { \
-    echo "Date number in $1 doesn't match $2" 2>&1; \
-    exit 1; \
-}
-endef
 
 .PHONY: check-version
 check-version:
 	$(call CHECKVER,check-changelog.rst,$(shell ./check-changelog --version))
-	$(call CHECKVER,disk-inventory.rst,$(shell ./disk-inventory --version))
-	$(call CHECKVER,du-diff.rst,$(shell ./du-diff --version))
-	$(call CHECKVER,machine-summary.rst,$(shell ./machine_summary.py --version))
 	$(call CHECKVER,new-changelog-entry.rst,$(shell ./new-changelog-entry --version|awk 'NR==1{print $$NF}'))
 
 .PHONY: install
 install:
-	install -d $(DESTDIR)/usr/bin/
-	install du-diff $(DESTDIR)/usr/bin/du-diff
-	install -d $(DESTDIR)/usr/sbin/
-	install new-changelog-entry $(DESTDIR)/usr/sbin/
-	install disk-inventory $(DESTDIR)/usr/sbin/
-	install machine_summary.py $(DESTDIR)/usr/sbin/machine-summary
-	install check-changelog $(DESTDIR)/usr/sbin/check-changelog
+	install -D new-changelog-entry $(DESTDIR)/usr/sbin/new-changelog-entry
+	install -D check-changelog $(DESTDIR)/usr/sbin/check-changelog
 
 
 VCS_STATUS = git status --porcelain
@@ -85,6 +67,9 @@ clean-build-tree:
 .PHONY: source-package
 source-package: clean-build-tree test check-target
 	cd pkgbuild/$(source) && debuild -S -i -k$(GPGKEY)
+	rm -rf pkgbuild/$(source)
+	@echo
+	@echo "Built pkgbuild/$(source)_$(version)_source.changes"
 
 .PHONY: upload-to-ppa release
 release upload-to-ppa: source-package
@@ -96,6 +81,7 @@ release upload-to-ppa: source-package
 .PHONY: binary-package
 binary-package: clean-build-tree
 	cd pkgbuild/$(source) && debuild -i -k$(GPGKEY)
+	rm -rf pkgbuild/$(source)
 	@echo
 	@echo "Built pkgbuild/$(source)_$(version)_all.deb"
 
@@ -107,4 +93,7 @@ vagrant-test-install: binary-package
 
 .PHONY: pbuilder-test-build
 pbuilder-test-build: source-package
+	# NB: you need to periodically run pbuilder-dist $(TARGET_DISTRO) update
 	pbuilder-dist $(TARGET_DISTRO) build pkgbuild/$(source)_$(version).dsc
+	@echo
+	@echo "Built ~/pbuilder/$(TARGET_DISTRO)_result/$(source)_$(version)_all.deb"
