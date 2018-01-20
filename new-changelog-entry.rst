@@ -7,8 +7,8 @@ tool to keep a sysadmin diary
 -----------------------------
 
 :Author: Marius Gedminas <marius@gedmin.as>
-:Date: 2015-06-23
-:Version: 1.1.0
+:Date: 2018-01-20
+:Version: 1.2.0
 :Manual section: 8
 
 
@@ -18,6 +18,8 @@ SYNOPSIS
 **new-changelog-entry** [*filename*] [**-a**] [*message*]
 
 **new-changelog-entry** [*filename*] [**-e**]
+
+**new-changelog-entry** [**--**] [*message*]
 
 **new-changelog-entry** **-h** | **--help**
 
@@ -42,7 +44,8 @@ way (**-a** with no arguments appends a blank line at the end).
 
 You can specify a different changelog file by specifying it as the first
 argument.  The file must exist and it must have 'changelog' somewhere in the
-name, to avoid accidents.
+name, to avoid accidents.  You can use a leading **--** to disambiguate
+messages that look like filenames
 
 If the changelog file is not writeable by the current user,
 **new-changelog-entry** will attempt to elevate privileges by calling

@@ -5,6 +5,8 @@ pov-admin-tools (0.16.0) UNRELEASED; urgency=medium
   * debian/control:
     - add Breaks: for old versions of pov-server-page, which expect to find
       du-diff in $PATH.
+  * new-changelog-entry 1.2.0:
+    - allow leading -- to disambiguate messages that look like filenames.
 
  -- Marius Gedminas <marius@gedmin.as>  Sat, 20 Jan 2018 16:07:04 +0200
 

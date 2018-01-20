@@ -1,13 +1,14 @@
 #!/bin/sh
-# http://mg.pov.lt/blog/sysadmin-diary.html is the closest this thing has to
-# documentation.
-version=1.1.0
+# https://mg.pov.lt/blog/sysadmin-diary.html is the closest this thing has to
+# documentation.  Other than the man page, that is.
+version=1.2.0
 changelog=/root/Changelog
 editor=vim
 
 if [ x"$1" = x-h ] || [ x"$1" = x--help ]; then
     echo "Usage: $0 [filename] [-a] [message]"
     echo "Usage: $0 [filename] [-e]"
+    echo "Usage: $0 [--] [message]"
     echo
     echo "Opens an admin change log file (default: $changelog) in $editor"
     echo "or appends a timestamped message to the end and prints it."
@@ -17,6 +18,8 @@ if [ x"$1" = x-h ] || [ x"$1" = x--help ]; then
     echo "  --version    print version number and exit"
     echo "  -a           append to the last message without adding a timestamped header"
     echo "  -e           edit the changelog without adding a timestamped header"
+    echo "  --           treat the next argument as part of the message"
+    echo "               even if it looks like a filename"
     exit
 fi
 
@@ -40,14 +43,14 @@ if test -n "$1" && test -f "$1" || test "$1" = "$changelog"; then
     esac
 fi
 
-swapfile="`dirname $changelog`/.`basename $changelog`.swp"
+swapfile="$(dirname "$changelog")/.$(basename "$changelog").swp"
 
-if [ -f $swapfile ]; then
+if [ -f "$swapfile" ]; then
     echo "Someone is currently editing $changelog ($swapfile exists)" 1>&2
     exit 1
 fi
 
-if ! [ -w $changelog ] && [ `id -u` -ne 0 ]; then
+if ! [ -w "$changelog" ] && [ "$(id -u)" -ne 0 ]; then
     exec sudo "$0" "$changelog" "$@"
 fi
 
@@ -60,25 +63,28 @@ elif [ x"$1" = x-e ]; then
     header=0
     append=0
     shift $#
+elif [ x"$1" = x-- ]; then
+    shift
 fi
 
 msg="$*"
 
 if [ $header -eq 1 ]; then
-    if [ -f $changelog ]; then
+    if [ -f "$changelog" ]; then
         # append an empty line if it is not there
-        test -n "`tail -n 1 $changelog`" && echo >> $changelog
+        test -n "$(tail -n 1 "$changelog")" && echo >> "$changelog"
     fi
 
     # append a header
-    cat >> $changelog <<END
-`date +'%Y-%m-%d %H:%M %z'`: ${SUDO_USER:-$USER}
+    cat >> "$changelog" <<END
+$(date +'%Y-%m-%d %H:%M %z'): ${SUDO_USER:-$USER}
   $msg
 END
 elif [ $append -eq 1 ]; then
-    printf "  %s\n" "$msg" >> $changelog
+    printf "  %s\n" "$msg" >> "$changelog"
 fi
 
+# shellcheck disable=SC2015
 test -z "$msg" \
-  && exec $editor $changelog +$ \
-  || tail $changelog
+  && exec "$editor" "$changelog" +$ \
+  || tail "$changelog"
