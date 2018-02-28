@@ -1,3 +1,11 @@
+pov-admin-tools (0.16.1) UNRELEASED; urgency=medium
+
+  * debian/control:
+    - drop apt-checkupdates from Recommends: -- uanttended-upgrades supercedes
+      it.
+
+ -- Marius Gedminas <marius@gedmin.as>  Wed, 28 Feb 2018 14:32:27 +0200
+
 pov-admin-tools (0.16.0) trusty; urgency=medium
 
   * Moved machine-summary, disk-inventory and du-diff scripts into

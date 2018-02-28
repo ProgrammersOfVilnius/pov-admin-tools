@@ -13,7 +13,7 @@ Recommends:
  git, etckeeper, tig,
  postfix | mail-transport-agent,
  bsd-mailx | mailx,
- apt-checkupdates, unattended-upgrades, update-notifier-common, debsums,
+ unattended-upgrades, update-notifier-common, debsums,
  debian-goodies, apt-show-versions,
  collectd-core,
  smartmontools, mcelog, atop, dstat,
