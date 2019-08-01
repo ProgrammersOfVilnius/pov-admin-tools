@@ -1,10 +1,10 @@
-pov-admin-tools (0.16.1) UNRELEASED; urgency=medium
+pov-admin-tools (0.16.1) xenial; urgency=medium
 
   * debian/control:
     - drop apt-checkupdates from Recommends: -- uanttended-upgrades supercedes
       it.
 
- -- Marius Gedminas <marius@gedmin.as>  Wed, 28 Feb 2018 14:32:27 +0200
+ -- Marius Gedminas <marius@gedmin.as>  Thu, 01 Aug 2019 15:40:44 +0300
 
 pov-admin-tools (0.16.0) trusty; urgency=medium
 
