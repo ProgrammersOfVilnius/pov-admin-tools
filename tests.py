@@ -21,7 +21,8 @@ def test_check(capsys):
           wrote some tests
     """).splitlines(True), 'Changelog')
 
-    assert capsys.readouterr().err == (
+    out, err = capsys.readouterr()
+    assert err == (
         'Changelog:10: date out of order (2019-08-27 15:35'
         ' after 2019-08-27 15:36)\n'
         'Changelog:4: 2019-08-27 15:35 previously used here\n'
@@ -47,7 +48,8 @@ def test_main(monkeypatch, capsys):
 def test_main_no_such_file(monkeypatch, capsys):
     monkeypatch.setattr(sys, 'argv', ['check-changelog', '/no/such/file'])
     cc.main()
-    assert capsys.readouterr().err == (
+    out, err = capsys.readouterr()
+    assert err == (
         "check-changelog: [Errno 2] No such file or directory:"
         " '/no/such/file'\n"
     )

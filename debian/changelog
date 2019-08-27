@@ -1,12 +1,16 @@
-pov-admin-tools (0.16.2) UNRELEASED; urgency=medium
+pov-admin-tools (0.16.2) xenial; urgency=medium
 
   * check-changelog 1.0.1:
     - port to Python 3,
     - print errors to stderr instead of stdout.
   * debian/control:
     - depend on python3 instead of python.
+    - build-depend on python3-pytest
+  * debian/rules:
+    - override dh_auto_test because tox is unsuitable for the network-isolated
+      build environment.
 
- -- Marius Gedminas <marius@gedmin.as>  Tue, 27 Aug 2019 15:55:21 +0300
+ -- Marius Gedminas <marius@gedmin.as>  Tue, 27 Aug 2019 15:59:34 +0300
 
 pov-admin-tools (0.16.1) xenial; urgency=medium
 
