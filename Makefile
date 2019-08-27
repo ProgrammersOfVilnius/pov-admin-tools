@@ -23,6 +23,11 @@ all: new-changelog-entry.8 check-changelog.8
 
 .PHONY: test
 test: check-version
+	tox
+
+.PHONY: coverage
+coverage:
+	tox -e coverage
 
 .PHONY: check-target
 check-target:
@@ -43,7 +48,7 @@ define CHECKVER
 }
 endef
 
-check_changelog_version = $(shell ./check-changelog --version)
+check_changelog_version = $(shell ./check_changelog.py --version)
 new_changelog_entry_version = $(shell ./new-changelog-entry --version|awk 'NR==1{print $$NF}')
 
 .PHONY: check-version
@@ -60,7 +65,7 @@ update-version:
 .PHONY: install
 install:
 	install -D new-changelog-entry $(DESTDIR)/usr/sbin/new-changelog-entry
-	install -D check-changelog $(DESTDIR)/usr/sbin/check-changelog
+	install -D check_changelog.py $(DESTDIR)/usr/sbin/check-changelog
 
 
 VCS_STATUS = git status --porcelain

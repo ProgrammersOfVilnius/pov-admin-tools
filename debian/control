@@ -8,7 +8,7 @@ Homepage: https://github.com/ProgrammersOfVilnius/pov-admin-tools
 
 Package: pov-admin-tools
 Architecture: all
-Depends: python (>= 2.7), vim, lsb-release, sudo, ${misc:Depends}
+Depends: python3, vim, lsb-release, sudo, ${misc:Depends}
 Recommends:
  git, etckeeper, tig,
  postfix | mail-transport-agent,

@@ -8,3 +8,5 @@ __pycache__/
 *.1
 *.8
 pkgbuild/
+.coverage
+.tox/
