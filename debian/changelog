@@ -4,8 +4,10 @@ pov-admin-tools (0.16.2) xenial; urgency=medium
     - port to Python 3,
     - print errors to stderr instead of stdout.
   * debian/control:
-    - depend on python3 instead of python.
-    - build-depend on python3-pytest
+    - depend on python3 instead of python,
+    - build-depend on python3-pytest,
+    - stop recommending ntp, it's unnecessary now that systemd-timesyncd
+      exists.
   * debian/rules:
     - override dh_auto_test because tox is unsuitable for the network-isolated
       build environment.
