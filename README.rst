@@ -1,6 +1,9 @@
 PoV admin tools
 ===============
 
+.. image:: https://travis-ci.com/ProgrammersOfVilnius/pov-admin-tools.svg?branch=master
+    :target: https://travis-ci.com/ProgrammersOfVilnius/pov-admin-tools
+
 This package contains a few scripts we use at PoV for managing servers:
 
 - new-changelog-entry_: keeps a sysadmin diary (/root/Changelog)
