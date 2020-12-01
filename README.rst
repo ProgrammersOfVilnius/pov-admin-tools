@@ -1,8 +1,8 @@
 PoV admin tools
 ===============
 
-.. image:: https://travis-ci.com/ProgrammersOfVilnius/pov-admin-tools.svg?branch=master
-    :target: https://travis-ci.com/ProgrammersOfVilnius/pov-admin-tools
+.. image:: https://github.com/ProgrammersOfVilnius/pov-admin-tools/workflows/build/badge.svg?branch=master
+    :target: https://github.com/ProgrammersOfVilnius/pov-admin-tools/actions
 
 This package contains a few scripts we use at PoV for managing servers:
 
