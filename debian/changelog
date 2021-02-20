@@ -1,3 +1,10 @@
+pov-admin-tools (0.16.3) UNRELEASED; urgency=medium
+
+  * debian/control:
+    - add lsof to Recommends.
+
+ -- Marius Gedminas <marius@gedmin.as>  Sat, 20 Feb 2021 11:39:07 +0200
+
 pov-admin-tools (0.16.2) xenial; urgency=medium
 
   * check-changelog 1.0.1:
