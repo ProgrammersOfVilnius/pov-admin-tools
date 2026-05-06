@@ -39,6 +39,9 @@ test: check-version     ##: run tests
 coverage:               ##: measure test coverage
 	tox -e coverage
 
+clean:                  ##: delete generated files
+	rm -f $(manpages) *.pyc debian/*.debhelper.log
+
 ##: Run these when `make release` tells you to, otherwise ignore them
 
 .PHONY: check-target
