@@ -8,13 +8,13 @@ Homepage: https://github.com/ProgrammersOfVilnius/pov-admin-tools
 
 Package: pov-admin-tools
 Architecture: all
-Depends: python3, vim, lsb-release, sudo, ${misc:Depends}
+Depends: python3, vim, sudo, ${misc:Depends}
 Recommends:
  git, etckeeper, tig,
  postfix | mail-transport-agent,
  bsd-mailx | mailx,
  unattended-upgrades, update-notifier-common, debsums,
- debian-goodies, apt-show-versions,
+ debian-goodies, apt-show-versions, lsb-release,
  collectd-core,
  smartmontools, mcelog, atop, dstat, lsof,
  screen, tree, bash-completion, command-not-found, htop, pydf, psmisc,
