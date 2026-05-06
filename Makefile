@@ -7,7 +7,7 @@ manpage_sources = new-changelog-entry.rst check-changelog.rst
 manpages = $(manpage_sources:%.rst=%.8)
 
 # change this to the lowest supported Ubuntu LTS
-TARGET_DISTRO := focal
+TARGET_DISTRO := jammy
 
 # for testing in vagrant:
 #   mkdir -p ~/tmp/vagrantbox && cd ~/tmp/vagrantbox
@@ -133,6 +133,7 @@ vagrant-test-install: binary-package  ## this is obsolete really
 
 .PHONY: pbuilder-test-build
 pbuilder-test-build: source-package     ##: build a binary .deb using pbuilder, to find build problems
+	# NB: 1st time run pbuilder-dist $(TARGET_DISTRO) create
 	# NB: you need to periodically run pbuilder-dist $(TARGET_DISTRO) update
 	pbuilder-dist $(TARGET_DISTRO) build pkgbuild/$(source)_$(version).dsc
 	@echo
